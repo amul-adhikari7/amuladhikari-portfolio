@@ -3,11 +3,11 @@ import AllInboxIcon from "@mui/icons-material/AllInbox";
 
 const skillData = [
   { name: "React", color: "#61dafb", level: 70 },
-  { name: "JavaScript", color: "#f7df1e" },
-  { name: "Node.js", color: "#3c873a" },
+  { name: "JavaScript", color: "#f7df1e", level: 75 },
+  { name: "Node.js", color: "#3c873a", level: 45 },
   { name: "TailwindCSS", color: "#38bdf8" },
-  { name: "UI/UX Design", color: "#a78bfa" },
-  { name: "SCSS", color: "#c6538c" },
+  { name: "UI/UX Design", color: "#a78bfa", level: 80 },
+  { name: "SCSS", color: "#c6538c", level: 60 },
 ];
 
 const Skills = () => {
