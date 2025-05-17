@@ -42,10 +42,13 @@ const Skills = () => {
                     gap: 2,
                     bgcolor: "white",
                     boxShadow: "0 4px 32px 0 rgba(16,185,129,0.10)",
-                    transition: "transform 0.35s, box-shadow 0.35s",
+                    transition:
+                      "transform 0.45s cubic-bezier(.4,2,.6,1), box-shadow 0.45s cubic-bezier(.4,2,.6,1)",
+                    position: "relative",
+                    overflow: "hidden",
                     "&:hover": {
-                      transform: "translateY(-8px) scale(1.06)",
-                      boxShadow: "0 12px 40px 0 rgba(16,185,129,0.18)",
+                      transform: "translateY(-12px) scale(1.08)",
+                      boxShadow: "0 16px 48px 0 rgba(16,185,129,0.22)",
                     },
                   }}
                 >
@@ -56,6 +59,11 @@ const Skills = () => {
                         width: 64,
                         height: 64,
                         boxShadow: 3,
+                        transition: "transform 0.5s cubic-bezier(.4,2,.6,1)",
+                        transform: "scale(1)",
+                        "&:hover": {
+                          transform: "scale(1.15) rotate(-8deg)",
+                        },
                       }}
                     >
                       <AllInboxIcon sx={{ fontSize: 38, color: "#fff" }} />
@@ -74,7 +82,10 @@ const Skills = () => {
                         fontSize: 18,
                         color: skill.color,
                         letterSpacing: 1,
-                      }}                    >
+                        transition: "background 0.4s",
+                        animation: "fadeInRight 1s",
+                      }}
+                    >
                       {skill.level ? `${skill.level}%` : `${60 + idx * 7}%`}
                     </Box>
                   </Box>
@@ -84,34 +95,115 @@ const Skills = () => {
                     color="#0f172a"
                     align="center"
                     letterSpacing={1}
+                    sx={{
+                      mb: 1,
+                      transition: "color 0.4s",
+                      "&:hover": { color: skill.color },
+                    }}
                   >
                     {skill.name}
                   </Typography>
                   <Box
                     sx={{
-                      width: "60%",
-                      height: 4,
-                      borderRadius: 2,
+                      width: "70%",
+                      height: 8,
+                      borderRadius: 4,
                       bgcolor: "#e0e7ef",
                       mt: 2,
                       mb: 1,
                       position: "relative",
+                      overflow: "hidden",
                     }}
                   >
                     <Box
-                      sx={{                        width: skill.level ? `${skill.level}%` : `${60 + idx * 7}%`,
+                      sx={{
+                        width: skill.level
+                          ? `${skill.level}%`
+                          : `${60 + idx * 7}%`,
                         height: "100%",
-                        borderRadius: 2,
+                        borderRadius: 4,
                         bgcolor: skill.color,
-                        transition: "width 1s cubic-bezier(.4,2,.6,1)",
+                        transition: "width 1.2s cubic-bezier(.4,2,.6,1)",
+                        boxShadow: `0 0 16px 0 ${skill.color}55`,
+                        animation: "growBar 1.2s",
+                      }}
+                    />
+                    {/* Animated gradient shine */}
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        left: 0,
+                        top: 0,
+                        width: "100%",
+                        height: "100%",
+                        background:
+                          "linear-gradient(120deg, transparent 60%, #fff7 80%, transparent 100%)",
+                        opacity: 0.5,
+                        pointerEvents: "none",
+                        animation: "shine 2.2s infinite",
                       }}
                     />
                   </Box>
+                  {/* Decorative floating shapes */}
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: -18,
+                      right: -18,
+                      width: 36,
+                      height: 36,
+                      borderRadius: "50%",
+                      bgcolor: skill.color,
+                      opacity: 0.12,
+                      zIndex: 0,
+                      filter: "blur(2px)",
+                      animation: "float 3s ease-in-out infinite",
+                    }}
+                  />
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      bottom: -14,
+                      left: -14,
+                      width: 28,
+                      height: 28,
+                      borderRadius: "50%",
+                      bgcolor: skill.color,
+                      opacity: 0.1,
+                      zIndex: 0,
+                      filter: "blur(1.5px)",
+                      animation: "float2 4s ease-in-out infinite",
+                    }}
+                  />
                 </Paper>
               </Grid>
             </Grow>
           ))}
         </Grid>
+        {/* Keyframes for custom animations */}
+        <style>{`
+          @keyframes growBar {
+            0% { width: 0; }
+            100% { width: 100%; }
+          }
+          @keyframes shine {
+            0% { left: -100%; }
+            60% { left: 100%; }
+            100% { left: 100%; }
+          }
+          @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+          }
+          @keyframes float2 {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(8px); }
+          }
+          @keyframes fadeInRight {
+            0% { opacity: 0; transform: translateX(30px); }
+            100% { opacity: 1; transform: translateX(0); }
+          }
+        `}</style>
       </Box>
     </Box>
   );
