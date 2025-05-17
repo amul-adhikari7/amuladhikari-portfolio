@@ -2,7 +2,7 @@ import { Box, Typography, Grid, Paper, Grow, Avatar } from "@mui/material";
 import AllInboxIcon from "@mui/icons-material/AllInbox";
 
 const skillData = [
-  { name: "React", color: "#61dafb" },
+  { name: "React", color: "#61dafb", level: 70 },
   { name: "JavaScript", color: "#f7df1e" },
   { name: "Node.js", color: "#3c873a" },
   { name: "TailwindCSS", color: "#38bdf8" },
@@ -74,9 +74,8 @@ const Skills = () => {
                         fontSize: 18,
                         color: skill.color,
                         letterSpacing: 1,
-                      }}
-                    >
-                      {`${60 + idx * 7}%`}
+                      }}                    >
+                      {skill.level ? `${skill.level}%` : `${60 + idx * 7}%`}
                     </Box>
                   </Box>
                   <Typography
@@ -100,8 +99,7 @@ const Skills = () => {
                     }}
                   >
                     <Box
-                      sx={{
-                        width: `${60 + idx * 7}%`,
+                      sx={{                        width: skill.level ? `${skill.level}%` : `${60 + idx * 7}%`,
                         height: "100%",
                         borderRadius: 2,
                         bgcolor: skill.color,
