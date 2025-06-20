@@ -1,222 +1,121 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { FiMenu, FiX } from "react-icons/fi";
+import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { FiMenu, FiX, FiGithub } from 'react-icons/fi'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [targetHash, setTargetHash] = useState(null);
-  const [activeSection, setActiveSection] = useState("home");
-  const [mounted, setMounted] = useState(false); // For fade-in
-  const location = useLocation();
-  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState('home')
 
-  // Fade-in effect on mount
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    const sectionIds = ['home', 'about', 'skills', 'contact']
+    const observers = sectionIds
+      .map(id => {
+        const section = document.getElementById(id)
+        if (section) {
+          const observer = new IntersectionObserver(
+            ([entry]) => {
+              if (entry.isIntersecting) {
+                setActiveSection(id)
+              }
+            },
+            { threshold: 0.5 }
+          )
+          observer.observe(section)
+          return observer
+        }
+        return null
+      })
+      .filter(Boolean)
+    return () => observers.forEach(observer => observer.disconnect())
+  }, [])
 
-  // Scrollspy effect
-  useEffect(() => {
-    const sectionIds = ["home", "about", "skills", "contact"];
-    const observers = [];
-
-    sectionIds.forEach((id) => {
-      const section = document.getElementById(id);
-      if (section) {
-        const observer = new IntersectionObserver(
-          ([entry]) => {
-            if (entry.isIntersecting) {
-              setActiveSection(id);
-            }
-          },
-          {
-            threshold: 0.5, // 50% of the section in view
-          }
-        );
-        observer.observe(section);
-        observers.push(observer);
-      }
-    });
-
-    return () => {
-      observers.forEach((observer) => observer.disconnect());
-    };
-  }, []);
-
-  // Handle scrolling to target section after navigation
-  useEffect(() => {
-    if (location.pathname === "/" && targetHash) {
-      const element = document.getElementById(targetHash);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-        setTargetHash(null);
-      }
+  const handleNavigation = sectionId => {
+    setIsOpen(false)
+    const element = document.getElementById(sectionId)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
     }
-  }, [location, targetHash]);
+  }
 
-  const handleHashLink = (hash) => {
-    setIsOpen(false); // Close mobile menu
+  const navLinkClass = section => `
+    relative px-3 py-2 text-base font-medium transition-all duration-300
+    ${
+      activeSection === section
+        ? 'text-white underline underline-offset-4'
+        : 'text-gray-400 hover:text-white'
+    }`
 
-    if (location.pathname === "/") {
-      const element = document.getElementById(hash);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    } else {
-      setTargetHash(hash);
-      navigate("/", { replace: true });
-    }
-  };
-
-  const navLinkClass = (section) =>
-    `relative transition-all duration-300 px-2 py-1
-      ${
-        activeSection === section
-          ? "text-emerald-600 font-semibold"
-          : "text-gray-700 hover:text-emerald-600"
-      }
-      group`;
-
-  // Animated underline for nav links
-  const underline = (
-    <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-emerald-500 scale-x-0 group-hover:scale-x-100 group-focus:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
-  );
-
-  // Animate nav fade-in and slide-down
   return (
-    <nav
-      className={`px-6 py-4 flex justify-between items-center bg-white/70 backdrop-blur-md shadow-lg sticky top-0 z-50 transition-all duration-700 ${
-        mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"
-      } animate-navbar-fade`}
-      style={{ WebkitBackdropFilter: "blur(12px)" }}
+    <motion.nav
+      className='fixed top-0 left-0 z-50 w-full bg-white/5 backdrop-blur-[10px] border-b border-white/10 shadow-md'
+      initial={{ y: -60, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
-      <Link
-        to="/"
-        className="text-2xl font-bold text-emerald-600 tracking-tight drop-shadow-sm transition-transform duration-500 hover:scale-110 hover:text-emerald-700 animate-navbar-logo"
-      >
-        Portfolio
-      </Link>
-
-      {/* Desktop Navigation */}
-      <div className="hidden md:flex space-x-8">
-        {["home", "about", "skills", "contact"].map((section) => (
-          <button
-            key={section}
-            onClick={() => handleHashLink(section)}
-            className={
-              navLinkClass(section) +
-              " focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 relative overflow-hidden"
-            }
-          >
-            <span className="relative z-10 animate-navbar-link">
-              {section.charAt(0).toUpperCase() + section.slice(1)}
-            </span>
-            {underline}
-            <span className="absolute left-0 top-0 w-full h-full bg-emerald-50 opacity-0 group-hover:opacity-60 transition-opacity duration-300 pointer-events-none" />
-          </button>
-        ))}
-        <a
-          href="https://github.com/amul-adhikari7?tab=repositories"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="relative transition-all duration-300 px-2 py-1 text-gray-700 hover:text-emerald-600 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 overflow-hidden"
-        >
-          <span className="relative z-10 animate-navbar-link">Projects</span>
-          <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-emerald-500 scale-x-0 group-hover:scale-x-100 group-focus:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
-          <span className="absolute left-0 top-0 w-full h-full bg-emerald-50 opacity-0 group-hover:opacity-60 transition-opacity duration-300 pointer-events-none" />
-        </a>
-      </div>
-
-      {/* Mobile Menu Button */}
-      <button
-        className={`md:hidden text-gray-700 focus:outline-none transition-transform duration-500 ${
-          isOpen ? "rotate-90 scale-110" : "rotate-0 scale-100"
-        } animate-navbar-menu`}
-        onClick={() => setIsOpen(!isOpen)}
-        aria-label="Toggle menu"
-      >
-        <span className="transition-transform duration-500">
-          {isOpen ? <FiX size={28} /> : <FiMenu size={28} />}
-        </span>
-      </button>
-
-      {/* Mobile Navigation */}
-      <div
-        className={`md:hidden fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md shadow-lg z-50 py-8 px-8 transition-all duration-500 ease-in-out ${
-          isOpen
-            ? "translate-y-0 opacity-100 pointer-events-auto"
-            : "-translate-y-10 opacity-0 pointer-events-none"
-        } animate-navbar-mobile`}
-        style={{ WebkitBackdropFilter: "blur(12px)" }}
-      >
-        <div className="flex flex-col space-y-6 text-lg animate-fade-in">
-          {["home", "about", "skills", "contact"].map((section) => (
+      <div className='flex items-center justify-between px-6 py-4 mx-auto max-w-7xl'>
+        <Link to='/' className='text-xl font-bold tracking-wide text-white'>
+          Amul Adhikari
+        </Link>
+        <div className='items-center hidden space-x-6 md:flex'>
+          {['home', 'about', 'skills', 'contact'].map(section => (
             <button
               key={section}
-              onClick={() => handleHashLink(section)}
-              className={`${navLinkClass(
-                section
-              )} text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 relative overflow-hidden animate-navbar-link`}
+              onClick={() => handleNavigation(section)}
+              className={navLinkClass(section)}
             >
-              <span className="relative z-10">
-                {section.charAt(0).toUpperCase() + section.slice(1)}
-              </span>
-              {underline}
-              <span className="absolute left-0 top-0 w-full h-full bg-emerald-50 opacity-0 group-hover:opacity-60 transition-opacity duration-300 pointer-events-none" />
+              {section.charAt(0).toUpperCase() + section.slice(1)}
             </button>
           ))}
           <a
-            href="https://github.com/amul-adhikari7?tab=repositories"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="relative transition-all duration-300 px-2 py-1 text-gray-700 hover:text-emerald-600 group text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 overflow-hidden animate-navbar-link"
-            onClick={() => setIsOpen(false)}
+            href='https://github.com/amul-adhikari7?tab=repositories'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='flex items-center gap-2 px-3 py-2 text-base font-medium text-gray-400 transition-colors duration-300 hover:text-white'
           >
-            <span className="relative z-10">Projects</span>
-            <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-emerald-500 scale-x-0 group-hover:scale-x-100 group-focus:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
-            <span className="absolute left-0 top-0 w-full h-full bg-emerald-50 opacity-0 group-hover:opacity-60 transition-opacity duration-300 pointer-events-none" />
+            <FiGithub /> Projects
           </a>
         </div>
+        <button
+          className='p-2 text-gray-300 transition duration-300 rounded-md md:hidden hover:text-white focus:outline-none focus:ring-2 focus:ring-white'
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+        </button>
       </div>
-      <style>{`
-        .animate-navbar-fade {
-          animation: navbarFadeIn 1.1s cubic-bezier(.4,2,.6,1);
-        }
-        .animate-navbar-logo {
-          animation: navbarLogoPop 1.2s cubic-bezier(.4,2,.6,1);
-        }
-        .animate-navbar-link {
-          animation: navbarLinkFadeIn 1.2s cubic-bezier(.4,2,.6,1);
-        }
-        .animate-navbar-menu {
-          animation: navbarMenuPop 1.2s cubic-bezier(.4,2,.6,1);
-        }
-        .animate-navbar-mobile {
-          animation: navbarMobileSlide 0.7s cubic-bezier(.4,2,.6,1);
-        }
-        @keyframes navbarFadeIn {
-          0% { opacity: 0; transform: translateY(-24px); }
-          100% { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes navbarLogoPop {
-          0% { opacity: 0; transform: scale(0.7); }
-          100% { opacity: 1; transform: scale(1); }
-        }
-        @keyframes navbarLinkFadeIn {
-          0% { opacity: 0; transform: translateY(16px); }
-          100% { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes navbarMenuPop {
-          0% { opacity: 0; transform: scale(0.7) rotate(-30deg); }
-          100% { opacity: 1; transform: scale(1) rotate(0); }
-        }
-        @keyframes navbarMobileSlide {
-          0% { opacity: 0; transform: translateY(-32px); }
-          100% { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
-    </nav>
-  );
-};
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className='fixed inset-0 z-40 flex flex-col items-center justify-center gap-6 bg-white/5 backdrop-blur-[8px] md:hidden'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            {['home', 'about', 'skills', 'contact'].map(section => (
+              <motion.button
+                key={section}
+                onClick={() => handleNavigation(section)}
+                className='text-2xl font-semibold text-gray-300 transition duration-300 hover:text-white'
+                whileTap={{ scale: 0.95 }}
+              >
+                {section.charAt(0).toUpperCase() + section.slice(1)}
+              </motion.button>
+            ))}
+            <motion.a
+              href='https://github.com/amul-adhikari7?tab=repositories'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='flex items-center gap-2 px-5 py-3 text-lg font-medium text-gray-300 transition duration-300 hover:text-white'
+              whileTap={{ scale: 0.95 }}
+            >
+              <FiGithub /> Projects
+            </motion.a>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.nav>
+  )
+}
 
-export default Navbar;
+export default Navbar

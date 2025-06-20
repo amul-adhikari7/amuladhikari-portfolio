@@ -1,66 +1,118 @@
+import { FiGithub, FiLinkedin, FiTwitter } from 'react-icons/fi'
+import { motion } from 'framer-motion'
+
 const Footer = () => {
   return (
-    <footer className="relative bg-gradient-to-r from-emerald-800 to-emerald-950 text-gray-200 py-10 px-6 overflow-hidden shadow-inner">
-      {/* Animated blurred background shapes */}
-      <div className="absolute -top-16 left-1/2 -translate-x-1/2 w-96 h-32 bg-emerald-400 opacity-15 rounded-full blur-3xl animate-footer-float" />
-      <div className="absolute bottom-0 right-0 w-40 h-40 bg-emerald-600 opacity-10 rounded-full blur-2xl animate-footer-float2" />
-      <div className="max-w-4xl mx-auto text-center relative z-10">
-        <div className="mb-4 flex justify-center items-center gap-2 animate-footer-fade">
-          <span className="text-2xl font-extrabold text-emerald-300 tracking-wider drop-shadow-lg select-none">
+    <footer className='relative bg-[#0b0b17] text-white py-14 px-6 overflow-hidden shadow-inner border-t border-purple-800'>
+      <div className='absolute -top-20 left-1/2 -translate-x-1/2 w-[30rem] h-40 bg-purple-900/20 rounded-full blur-3xl animate-float z-0' />
+      <div className='absolute bottom-0 right-0 z-0 rounded-full w-44 h-44 bg-pink-700/20 blur-2xl animate-float2' />
+
+      <div className='relative z-10 max-w-4xl mx-auto text-center'>
+        <motion.div
+          className='flex items-center justify-center gap-3 mb-5'
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          <span className='text-3xl font-extrabold tracking-wider text-transparent select-none bg-clip-text bg-gradient-to-r from-purple-300 to-pink-400 drop-shadow-lg'>
             &lt;/&gt;
           </span>
-          <span className="text-lg font-semibold text-emerald-100 tracking-wide select-none">
+          <span className='text-lg font-semibold tracking-wide text-purple-100 select-none'>
             Designed & Built by Amul Adhikari
           </span>
-        </div>
-        <div className="flex justify-center gap-2 mb-2 animate-footer-fade delay-100">
-          <span className="text-xs bg-emerald-700/60 px-3 py-1 rounded-full font-mono tracking-wider text-emerald-100 shadow">
-            React
-          </span>
-          <span className="text-xs bg-emerald-700/60 px-3 py-1 rounded-full font-mono tracking-wider text-emerald-100 shadow">
-            Tailwind CSS
-          </span>
-          <span className="text-xs bg-emerald-700/60 px-3 py-1 rounded-full font-mono tracking-wider text-emerald-100 shadow">
-            Vite
-          </span>
-        </div>
-        <div className="text-xs text-emerald-200/80 animate-footer-fade delay-200">
-          <span className="font-semibold">
+        </motion.div>
+
+        <motion.div
+          className='flex justify-center gap-2 mb-3'
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true }}
+        >
+          {['React', 'Tailwind CSS', 'Vite'].map((tech, index) => (
+            <span
+              key={tech}
+              className='px-3 py-1 font-mono text-xs tracking-wider text-purple-200 rounded-full shadow bg-slate-800 backdrop-blur-md'
+            >
+              {tech}
+            </span>
+          ))}
+        </motion.div>
+
+        <motion.div
+          className='flex justify-center gap-4 mt-4'
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          viewport={{ once: true }}
+        >
+          {[
+            {
+              href: 'https://github.com/amul-adhikari7',
+              icon: <FiGithub size={22} />
+            },
+            {
+              href: 'https://linkedin.com/in/yourusername',
+              icon: <FiLinkedin size={22} />
+            },
+            {
+              href: 'https://twitter.com/yourusername',
+              icon: <FiTwitter size={22} />
+            }
+          ].map((item, idx) => (
+            <a
+              key={idx}
+              href={item.href}
+              target='_blank'
+              rel='noopener noreferrer'
+              className='p-3 text-purple-300 transition-all rounded-full shadow bg-slate-800 hover:bg-purple-600 hover:text-white backdrop-blur-sm'
+            >
+              {item.icon}
+            </a>
+          ))}
+        </motion.div>
+
+        <motion.div
+          className='mt-6 text-xs text-purple-400'
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <span className='font-semibold'>
             © {new Date().getFullYear()} Amul Adhikari.
-          </span>{" "}
+          </span>{' '}
           All rights reserved.
-        </div>
-        <div className="mt-4 animate-footer-fade delay-300">
-          <span className="text-[10px] text-emerald-300/60 font-mono tracking-widest">
+        </motion.div>
+
+        <motion.div
+          className='mt-3'
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          viewport={{ once: true }}
+        >
+          <span className='text-[10px] text-purple-400 font-mono tracking-widest'>
             "Striving for pixel-perfect code & meaningful experiences."
           </span>
-        </div>
+        </motion.div>
       </div>
+
       <style>{`
-        .animate-footer-fade {
-          animation: footerFadeIn 1.2s cubic-bezier(.4,2,.6,1);
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-12px); }
         }
-        .animate-footer-float {
-          animation: footerFloat 6s ease-in-out infinite alternate;
+        .animate-float {
+          animation: float 8s ease-in-out infinite;
         }
-        .animate-footer-float2 {
-          animation: footerFloat2 7s ease-in-out infinite alternate;
-        }
-        @keyframes footerFadeIn {
-          0% { opacity: 0; transform: translateY(24px); }
-          100% { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes footerFloat {
-          0% { transform: translateY(0) scaleX(1.1); }
-          100% { transform: translateY(18px) scaleX(1.2); }
-        }
-        @keyframes footerFloat2 {
-          0% { transform: translateY(0) scale(1); }
-          100% { transform: translateY(-12px) scale(1.08); }
+        .animate-float2 {
+          animation: float 10s ease-in-out infinite;
         }
       `}</style>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

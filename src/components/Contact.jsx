@@ -1,227 +1,196 @@
-import { FiGithub, FiLinkedin, FiMail, FiFacebook } from "react-icons/fi";
-import { useState } from "react";
-import emailjs from "emailjs-com";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
-
-const socialLinks = [
-  {
-    href: "https://github.com/amul-adhikari7",
-    label: "GitHub",
-    icon: <FiGithub size={22} />,
-    color: "#181717",
-    hover: "hover:bg-gray-900 hover:text-white",
-  },
-  {
-    href: "https://www.linkedin.com/in/amul-adhikari-019990280/",
-    label: "LinkedIn",
-    icon: <FiLinkedin size={22} />,
-    color: "#0A66C2",
-    hover: "hover:bg-blue-700 hover:text-white",
-  },
-  {
-    href: "https://www.facebook.com/amul.adhikari.37/",
-    label: "Facebook",
-    icon: <FiFacebook size={22} />,
-    color: "#1877F3",
-    hover: "hover:bg-blue-600 hover:text-white",
-  },
-  {
-    href: "mailto:amuladhikari7@gmail.com",
-    label: "Email",
-    icon: <FiMail size={22} />,
-    color: "#10b981",
-    hover: "hover:bg-emerald-600 hover:text-white",
-  },
-];
+import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi'
+import { useState } from 'react'
+import emailjs from 'emailjs-com'
+import { toast, ToastContainer } from 'react-toastify'
+import { motion } from 'framer-motion'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Contact = () => {
-  const [isFormOpen, setIsFormOpen] = useState(false);
-  const [isSending, setIsSending] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false)
+  const [isSending, setIsSending] = useState(false)
 
-  const toggleForm = () => {
-    setIsFormOpen(!isFormOpen);
-  };
-
-  const sendEmail = (e) => {
-    e.preventDefault();
-    setIsSending(true);
+  const sendEmail = e => {
+    e.preventDefault()
+    setIsSending(true)
     emailjs
       .sendForm(
-        "service_v59nyrk",
-        "template_nlcctqd",
+        'service_v59nyrk',
+        'template_nlcctqd',
         e.target,
-        "LxUq1SBWsLcVApen5"
+        'LxUq1SBWsLcVApen5'
       )
       .then(
-        (result) => {
-          toast.success("Message sent successfully!");
-          setIsSending(false);
-          setIsFormOpen(false);
+        () => {
+          toast.success('Message sent successfully!')
+          setIsSending(false)
+          setIsFormOpen(false)
         },
-        (error) => {
-          toast.error("Failed to send message. Please try again later.");
-          setIsSending(false);
+        () => {
+          toast.error('Failed to send message. Please try again later.')
+          setIsSending(false)
         }
-      );
-    e.target.reset();
-  };
+      )
+    e.target.reset()
+  }
 
   return (
     <section
-      id="contact"
-      className="relative bg-gradient-to-br from-emerald-50 to-green-50 text-gray-800 py-16 px-6 overflow-hidden"
+      id='contact'
+      className='relative px-6 py-28 overflow-hidden text-white bg-[#0b0b17]'
     >
-      {/* Decorative blurred shapes */}
-      <div className="absolute -top-20 -left-20 w-72 h-72 bg-emerald-300 opacity-20 rounded-full blur-3xl z-0 animate-pulse" />
-      <div className="absolute -bottom-24 -right-24 w-80 h-80 bg-emerald-500 opacity-20 rounded-full blur-3xl z-0 animate-pulse" />
-      <ToastContainer />
-      <div className="max-w-3xl mx-auto text-center relative z-10">
-        <h2 className="text-3xl md:text-4xl font-extrabold mb-4 text-emerald-700 animate-fade-in">
-          Let's Work Together
-        </h2>
-        <p className="text-gray-600 mb-10 max-w-2xl mx-auto animate-fade-in delay-100">
-          Have a project in mind or want to chat? Feel free to reach out!
-        </p>
-        <div className="flex justify-center gap-4 mb-10 animate-fade-in delay-200">
-          {socialLinks.map((link) => (
+      <div className='absolute inset-0 pointer-events-none'>
+        <div className='absolute rounded-full w-96 h-96 bg-blue-500/10 blur-3xl top-10 left-10 animate-pulse' />
+        <div
+          className='absolute rounded-full w-80 h-80 bg-purple-500/10 blur-3xl bottom-10 right-10 animate-pulse'
+          style={{ animationDelay: '2s' }}
+        />
+      </div>
+
+      <ToastContainer
+        position='top-center'
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='dark'
+      />
+
+      <div className='relative z-10 max-w-3xl mx-auto text-center'>
+        <motion.h2
+          className='mb-6 text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500'
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          Let's Collaborate
+        </motion.h2>
+        <motion.p
+          className='max-w-2xl mx-auto mb-12 text-lg text-slate-300'
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true }}
+        >
+          Got a project idea or just want to connect? I'm always open to
+          discussing creative collaborations or development work.
+        </motion.p>
+
+        <motion.div
+          className='flex justify-center gap-5 mb-10'
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          viewport={{ once: true }}
+        >
+          {[
+            { href: 'mailto:your@email.com', icon: <FiMail size={22} /> },
+            {
+              href: 'https://github.com/amul-adhikari7',
+              icon: <FiGithub size={22} />
+            },
+            {
+              href: 'https://linkedin.com/in/amul-adhikari-019990280/',
+              icon: <FiLinkedin size={22} />
+            }
+          ].map((item, idx) => (
             <a
-              key={link.label}
-              href={link.href}
-              target={link.href.startsWith("http") ? "_blank" : undefined}
-              rel="noopener noreferrer"
-              aria-label={link.label}
-              className={`transition-all duration-300 rounded-full p-3 bg-white shadow-md text-emerald-700 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-emerald-400 ${link.hover}`}
-              style={{ color: link.color }}
+              key={idx}
+              href={item.href}
+              target='_blank'
+              rel='noopener noreferrer'
+              className='p-4 text-purple-300 transition-all duration-300 rounded-full shadow-lg bg-slate-800 hover:bg-purple-600 hover:text-white backdrop-blur-md'
             >
-              {link.icon}
+              {item.icon}
             </a>
           ))}
-        </div>
-        <button
-          onClick={toggleForm}
-          className="bg-emerald-600 hover:bg-emerald-700 text-white px-10 py-3 rounded-lg font-semibold shadow-lg transition transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-emerald-400 animate-fade-in delay-300"
+        </motion.div>
+
+        <motion.button
+          onClick={() => setIsFormOpen(true)}
+          className='px-10 py-3 font-semibold text-white transition-all duration-300 shadow-xl bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-500 hover:to-pink-400 rounded-2xl backdrop-blur-md'
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
         >
-          {isFormOpen ? "Close Form" : "Contact Me"}
-        </button>
+          Send a Message
+        </motion.button>
+
         {isFormOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 animate-fade-in">
-            <div className="bg-white text-gray-800 p-8 rounded-2xl shadow-2xl max-w-md w-full relative animate-slide-up">
+          <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm'>
+            <motion.div
+              className='relative w-full max-w-lg p-10 mx-4 border border-purple-700 shadow-2xl bg-slate-900 rounded-3xl'
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
               <button
-                onClick={toggleForm}
-                className="absolute top-3 right-3 text-gray-400 hover:text-emerald-600 text-2xl font-bold focus:outline-none"
-                aria-label="Close"
+                onClick={() => setIsFormOpen(false)}
+                className='absolute text-2xl top-4 right-4 text-slate-400 hover:text-purple-300'
               >
                 ×
               </button>
-              <h3 className="text-2xl font-bold mb-4 text-emerald-700">
-                Contact Form
+              <h3 className='mb-6 text-3xl font-bold text-purple-300'>
+                Get in Touch
               </h3>
-              <form onSubmit={sendEmail} className="space-y-5">
-                <div>
-                  <label
-                    htmlFor="fullName"
-                    className="block text-sm font-medium mb-1 text-gray-700"
+              <form onSubmit={sendEmail} className='space-y-6'>
+                {['name', 'email', 'message'].map((field, index) => (
+                  <motion.div
+                    key={field}
+                    className='relative'
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    viewport={{ once: true }}
                   >
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    id="fullName"
-                    name="fullName"
-                    className="w-full px-4 py-2 border border-emerald-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-gray-50"
-                    required
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium mb-1 text-gray-700"
-                  >
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className="w-full px-4 py-2 border border-emerald-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-gray-50"
-                    required
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="phone"
-                    className="block text-sm font-medium mb-1 text-gray-700"
-                  >
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    className="w-full px-4 py-2 border border-emerald-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-gray-50"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-sm font-medium mb-1 text-gray-700"
-                  >
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows="4"
-                    className="w-full px-4 py-2 border border-emerald-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-gray-50"
-                    required
-                  ></textarea>
-                </div>
-                <div className="flex justify-end space-x-4 mt-2">
-                  <button
-                    type="button"
-                    onClick={toggleForm}
-                    className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 text-gray-700 font-medium transition"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-6 py-2 bg-emerald-600 text-white rounded-lg font-semibold shadow hover:bg-emerald-700 transition flex items-center gap-2 disabled:opacity-60"
-                    disabled={isSending}
-                  >
-                    {isSending ? (
-                      <span className="animate-spin inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full"></span>
+                    <label
+                      htmlFor={field}
+                      className='block mb-2 text-sm font-medium text-purple-200 capitalize'
+                    >
+                      {field === 'message'
+                        ? 'Message'
+                        : field.replace(/([A-Z])/g, ' $1')}
+                    </label>
+                    {field !== 'message' ? (
+                      <input
+                        type={field === 'email' ? 'email' : 'text'}
+                        name={field}
+                        id={field}
+                        required
+                        placeholder={`Enter your ${field}`}
+                        className='w-full px-5 py-3 text-white placeholder-purple-400 transition-all duration-300 border border-purple-600 bg-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-400 hover:shadow-md'
+                      />
                     ) : (
-                      "Send"
+                      <textarea
+                        name={field}
+                        id={field}
+                        rows={4}
+                        required
+                        placeholder='Write your message here...'
+                        className='w-full px-5 py-3 text-white placeholder-purple-400 transition-all duration-300 border border-purple-600 bg-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-400 hover:shadow-md'
+                      />
                     )}
-                  </button>
-                </div>
+                  </motion.div>
+                ))}
+                <motion.button
+                  type='submit'
+                  disabled={isSending}
+                  className='w-full py-3 font-semibold text-white transition-all duration-300 bg-gradient-to-r from-purple-600 to-pink-500 rounded-xl hover:from-purple-500 hover:to-pink-400 backdrop-blur-md'
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  {isSending ? 'Sending...' : 'Send Message'}
+                </motion.button>
               </form>
-            </div>
+            </motion.div>
           </div>
         )}
       </div>
-      {/* Animations */}
-      <style>{`
-        .animate-fade-in {
-          animation: fadeIn 1s cubic-bezier(.4,2,.6,1);
-        }
-        .animate-slide-up {
-          animation: slideUp 0.7s cubic-bezier(.4,2,.6,1);
-        }
-        @keyframes fadeIn {
-          0% { opacity: 0; transform: translateY(24px); }
-          100% { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes slideUp {
-          0% { opacity: 0; transform: translateY(40px); }
-          100% { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
     </section>
-  );
-};
+  )
+}
 
-export default Contact;
+export default Contact

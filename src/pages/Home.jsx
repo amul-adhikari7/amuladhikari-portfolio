@@ -1,14 +1,14 @@
-import Hero from "../components/Hero";
-import Navbar from "../components/Navbar";
-import About from "../components/About";
-import Skills from "../components/Skills";
-import Projects from "../components/Projects";
-import Contact from "../components/Contact";
-import Footer from "../components/Footer";
+import Hero from '../components/Hero'
+import Navbar from '../components/Navbar'
+import About from '../components/About'
+import Skills from '../components/Skills'
+import Projects from '../components/Projects'
+import Contact from '../components/Contact'
+import Footer from '../components/Footer'
 
 const Home = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className='min-h-screen bg-gradient-to-br from-navy-900 to-navy-950 transition-colors duration-300'>
       <Navbar />
       <Hero />
       <About />
@@ -17,7 +17,7 @@ const Home = () => {
       <Contact />
       <Footer />
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
