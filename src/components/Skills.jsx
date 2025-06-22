@@ -156,14 +156,18 @@ const SkillsComponent = () => {
       </motion.p>
 
       <div
-        className='relative flex flex-wrap justify-center gap-6 px-2 pt-12 pb-8 mx-auto overflow-x-auto border shadow-2xl md:px-12 border-slate-700/30 rounded-2xl bg-gradient-to-t from-slate-900/20 to-transparent backdrop-blur-sm max-w-7xl sm:gap-6 sm:pt-16 sm:pb-12 md:gap-8 md:pt-16 md:pb-12 lg:gap-10 lg:pt-16 lg:pb-12 scrollbar-thin scrollbar-thumb-slate-700/40 scrollbar-track-transparent '
+        className='relative flex flex-nowrap justify-start gap-4 px-0 pt-12 pb-8 mx-auto overflow-x-auto border shadow-2xl md:px-12 border-slate-700/30 rounded-2xl bg-gradient-to-t from-slate-900/20 to-transparent backdrop-blur-sm max-w-7xl sm:gap-6 sm:pt-16 sm:pb-12 md:gap-8 md:pt-16 md:pb-12 lg:gap-10 lg:pt-16 lg:pb-12 scrollbar-thin scrollbar-thumb-slate-700/40 scrollbar-track-transparent snap-x snap-mandatory sm:snap-none min-h-[320px]'
         style={{ WebkitOverflowScrolling: 'touch' }}
       >
-        <div className='flex justify-center w-full min-w-0 gap-4 flex-nowrap sm:gap-6 md:gap-8 lg:gap-10 md:justify-start lg:justify-center'>
+        {/* Mobile-only gradient overlay for depth */}
+        <div className='absolute left-0 top-0 h-full w-8 bg-gradient-to-r from-[#0b0b17] to-transparent z-10 block sm:hidden pointer-events-none' />
+        <div className='absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-[#0b0b17] to-transparent z-10 block sm:hidden pointer-events-none' />
+        <div className='flex w-full gap-4 px-4 flex-nowrap sm:gap-6 md:gap-8 lg:gap-10 md:justify-start lg:justify-center sm:px-0'>
           {skills.map(({ name, color, icon, level, shadowColor }, idx) => (
             <motion.div
               key={name}
-              className='relative flex flex-col items-center w-24 min-w-[5.5rem] sm:w-28 sm:min-w-[7rem] md:w-32 md:min-w-[8rem] lg:w-36 lg:min-w-[9rem] cursor-pointer group'
+              className='relative flex flex-col items-center snap-center bg-white/5 sm:bg-transparent rounded-2xl shadow-lg sm:shadow-none p-2 sm:p-0 transition-all duration-300 hover:scale-105 active:scale-100 cursor-pointer min-w-[calc(100vw/3-1.5rem)] max-w-[calc(100vw/3-1.5rem)] w-[calc(100vw/3-1.5rem)] sm:w-28 sm:min-w-[7rem] md:w-32 md:min-w-[8rem] lg:w-36 lg:min-w-[9rem] h-[260px] sm:h-auto'
+              style={{ boxSizing: 'border-box' }}
               initial={{ height: 0 }}
               animate={{ height: visible ? (level / 100) * maxBarHeight : 0 }}
               transition={{
@@ -173,11 +177,11 @@ const SkillsComponent = () => {
               }}
               onMouseEnter={() => setHoveredSkill(idx)}
               onMouseLeave={() => setHoveredSkill(null)}
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.98 }}
             >
               <div
-                className={`relative w-full rounded-t-2xl bg-gradient-to-t ${color} shadow-xl ${shadowColor} overflow-hidden`}
-                style={{ height: '100%' }}
+                className={`relative w-full rounded-t-2xl bg-gradient-to-t ${color} shadow-xl ${shadowColor} overflow-hidden flex-1 min-h-[120px] flex flex-col justify-end`}
               >
                 <div className='absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer' />
                 <div
@@ -189,7 +193,7 @@ const SkillsComponent = () => {
               </div>
 
               <motion.div
-                className={`absolute flex items-center justify-center p-4 transform -translate-x-1/2 rounded-2xl shadow-2xl -top-16 left-1/2 bg-white/10 backdrop-blur-xl border border-white/20 w-14 h-14 sm:w-16 sm:h-16 ${shadowColor} transition-all duration-300`}
+                className={`absolute flex items-center justify-center p-3 sm:p-4 transform -translate-x-1/2 rounded-2xl shadow-2xl -top-12 sm:-top-16 left-1/2 bg-white/10 backdrop-blur-xl border border-white/20 w-14 h-14 sm:w-16 sm:h-16 ${shadowColor} transition-all duration-300 z-20`}
                 initial={{ y: -20, opacity: 0, rotate: -180 }}
                 animate={{ y: 0, opacity: 1, rotate: 0 }}
                 transition={{
@@ -205,7 +209,7 @@ const SkillsComponent = () => {
                   transition: { duration: 0.3 }
                 }}
               >
-                <div className='text-2xl text-white sm:text-3xl drop-shadow-lg'>
+                <div className='flex items-center justify-center w-full h-full text-2xl text-white sm:text-3xl drop-shadow-lg'>
                   {icon}
                 </div>
                 <div
@@ -214,7 +218,7 @@ const SkillsComponent = () => {
               </motion.div>
 
               <motion.div
-                className={`mt-6 text-sm sm:text-lg font-bold transition-all duration-300 ${
+                className={`mt-8 text-base sm:text-lg font-bold transition-all duration-300 ${
                   hoveredSkill === idx
                     ? 'scale-110 text-white'
                     : 'text-slate-300'
@@ -231,7 +235,7 @@ const SkillsComponent = () => {
               </motion.div>
 
               <motion.div
-                className={`mt-3 sm:mt-4 text-xs sm:text-sm font-bold tracking-wide text-center transition-all duration-300 ${
+                className={`mt-2 sm:mt-4 text-xs sm:text-sm font-bold tracking-wide text-center transition-all duration-300 ${
                   hoveredSkill === idx
                     ? 'text-white scale-105'
                     : 'text-slate-200'
@@ -245,7 +249,7 @@ const SkillsComponent = () => {
 
               {hoveredSkill === idx && (
                 <motion.div
-                  className='absolute px-3 py-2 text-xs font-medium transform -translate-x-1/2 border rounded-lg -bottom-16 left-1/2 bg-black/80 backdrop-blur-sm border-white/10 whitespace-nowrap'
+                  className='absolute z-20 px-3 py-2 text-xs font-medium transform -translate-x-1/2 border rounded-lg -bottom-16 left-1/2 bg-black/80 backdrop-blur-sm border-white/10 whitespace-nowrap'
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}

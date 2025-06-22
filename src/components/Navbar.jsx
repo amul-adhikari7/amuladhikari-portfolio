@@ -122,6 +122,34 @@ const Navbar = () => {
     open: { rotate: -45, y: -6 }
   }
 
+  // Add progress bar state
+  const [progress, setProgress] = useState(0)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['home', 'about', 'skills', 'contact', 'footer']
+      const sectionElements = sections.map(id => document.getElementById(id))
+      const scrollY = window.scrollY
+      const windowHeight = window.innerHeight
+      let progressValue = 0
+      for (let i = 0; i < sectionElements.length; i++) {
+        const el = sectionElements[i]
+        if (el) {
+          const rect = el.getBoundingClientRect()
+          const top = rect.top + scrollY
+          const bottom = top + el.offsetHeight
+          if (scrollY + windowHeight / 2 >= top) {
+            progressValue = ((i + 1) / sections.length) * 100
+          }
+        }
+      }
+      setProgress(progressValue)
+    }
+    window.addEventListener('scroll', handleScroll)
+    handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
     <motion.nav
       style={{
@@ -134,6 +162,8 @@ const Navbar = () => {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: [0.65, 0, 0.35, 1] }}
     >
+      {/* Removed Progress Bar */}
+
       <motion.div
         className='flex items-center justify-between h-full px-4 mx-auto sm:px-6 max-w-7xl'
         initial={{ opacity: 0 }}
@@ -164,7 +194,9 @@ const Navbar = () => {
             <motion.button
               key={section}
               onClick={() => handleNavigation(section)}
-              className={`${navLinkClass(section)} group`}
+              className={`${navLinkClass(
+                section
+              )} group flex flex-col items-center`}
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0, y: -20 }}
@@ -178,10 +210,17 @@ const Navbar = () => {
             >
               <span className='relative'>
                 {section.charAt(0).toUpperCase() + section.slice(1)}
+                {/* Progress-like bar under nav link */}
                 <motion.span
-                  className='absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-400'
-                  whileHover={{ width: '100%' }}
-                  transition={{ duration: 0.3 }}
+                  className='block h-1 mt-1 transition-all duration-300 rounded-full bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500/80'
+                  initial={{ width: 0, opacity: 0.5 }}
+                  animate={
+                    activeSection === section
+                      ? { width: '80%', opacity: 1 }
+                      : { width: '0%', opacity: 0.5 }
+                  }
+                  transition={{ duration: 0.4, ease: [0.65, 0, 0.35, 1] }}
+                  style={{ margin: '0 auto' }}
                 />
               </span>
             </motion.button>
@@ -263,12 +302,10 @@ const Navbar = () => {
                   Menu
                 </h2>
                 <motion.button
-                  onClick={e => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    setIsOpen(false)
-                  }}
-                  className='p-3 transition-all duration-200 text-white/80 hover:text-white hover:bg-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/30'
+                  type='button'
+                  onClick={() => setIsOpen(false)}
+                  className='z-50 p-3 transition-all duration-200 text-white/80 hover:text-white hover:bg-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/30'
+                  style={{ position: 'relative' }}
                   whileTap={{ scale: 0.9 }}
                   whileHover={{ scale: 1.1, rotate: 90 }}
                   aria-label='Close menu'
