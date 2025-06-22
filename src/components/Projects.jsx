@@ -141,7 +141,7 @@ const Projects = () => {
 
         {/* Enhanced projects grid */}
         <motion.div
-          className='grid gap-8 md:grid-cols-2 lg:grid-cols-3'
+          className='grid gap-8 px-0 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 sm:px-2 md:px-0'
           variants={containerVariants}
           initial='hidden'
           whileInView='visible'
@@ -163,9 +163,9 @@ const Projects = () => {
                 </div>
               )}
 
-              <div className='relative h-full flex flex-col overflow-hidden rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl border border-slate-700/30 shadow-2xl transition-all duration-500 hover:shadow-purple-500/20 hover:shadow-2xl hover:scale-[1.02] hover:border-purple-500/30'>
+              <div className='relative h-full flex flex-col overflow-hidden rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl border border-slate-700/30 shadow-2xl transition-all duration-500 hover:shadow-purple-500/20 hover:shadow-2xl hover:scale-[1.02] hover:border-purple-500/30 min-h-[420px] sm:min-h-[400px]'>
                 {/* Image section with enhanced overlay */}
-                <div className='relative h-56 overflow-hidden'>
+                <div className='relative h-48 overflow-hidden sm:h-56'>
                   <img
                     src={project.image}
                     alt={project.title}
@@ -217,12 +217,12 @@ const Projects = () => {
                 </div>
 
                 {/* Content section */}
-                <div className='flex flex-col flex-1 p-6'>
-                  <h3 className='mb-3 text-xl font-bold text-white transition-colors duration-300 group-hover:text-purple-300'>
+                <div className='flex flex-col flex-1 p-4 sm:p-6'>
+                  <h3 className='mb-3 text-lg font-bold text-white transition-colors duration-300 sm:text-xl group-hover:text-purple-300'>
                     {project.title}
                   </h3>
 
-                  <p className='flex-1 mb-4 text-sm leading-relaxed text-slate-300'>
+                  <p className='flex-1 mb-4 text-xs leading-relaxed sm:text-sm text-slate-300'>
                     {project.description}
                   </p>
 
@@ -231,7 +231,7 @@ const Projects = () => {
                     {project.technologies.map((tech, i) => (
                       <span
                         key={i}
-                        className='px-3 py-1 text-xs font-medium transition-all duration-300 border rounded-full bg-gradient-to-r from-slate-700 to-slate-600 text-slate-200 border-slate-600/50 hover:from-purple-700 hover:to-pink-700 hover:text-white'
+                        className='px-2 py-1 text-xs font-medium transition-all duration-300 border rounded-full sm:px-3 sm:py-1 bg-gradient-to-r from-slate-700 to-slate-600 text-slate-200 border-slate-600/50 hover:from-purple-700 hover:to-pink-700 hover:text-white'
                       >
                         {tech}
                       </span>
@@ -239,7 +239,7 @@ const Projects = () => {
                   </div>
 
                   {/* Project stats or additional info */}
-                  <div className='flex items-center justify-between pt-3 text-xs border-t text-slate-400 border-slate-700/50'>
+                  <div className='flex flex-col items-start justify-between gap-2 pt-3 text-xs border-t sm:flex-row sm:items-center text-slate-400 border-slate-700/50 sm:gap-0'>
                     <span className='flex items-center gap-1'>
                       <Zap className='w-3 h-3' />
                       Modern Tech

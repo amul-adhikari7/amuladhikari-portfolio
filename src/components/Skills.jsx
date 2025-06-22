@@ -9,7 +9,7 @@ import {
   TrendingUp
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { motion, useAnimation, useCycle } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 const skills = [
   {
@@ -70,9 +70,8 @@ const Skills = () => {
   return (
     <section
       id='skills'
-      className='relative px-6 py-24 bg-[#0b0b17] text-white select-none max-w-full overflow-x-hidden'
+      className='relative px-6 py-24 bg-[#0b0b17] text-white select-none overflow-hidden'
     >
-      {/* Background decorative elements */}
       <div className='absolute inset-0 overflow-hidden pointer-events-none'>
         <div className='absolute rounded-full top-20 left-10 w-72 h-72 bg-blue-500/5 blur-3xl animate-pulse'></div>
         <div
@@ -85,7 +84,6 @@ const Skills = () => {
         ></div>
       </div>
 
-      {/* Pre-heading badge */}
       <motion.div
         className='flex items-center justify-center mb-6'
         initial={{ opacity: 0, scale: 0.8 }}
@@ -99,25 +97,28 @@ const Skills = () => {
         </div>
       </motion.div>
 
-      {/* Main heading with enhanced animation */}
       <motion.div
         className='mb-8 text-center'
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
       >
-        <h2 className='relative mb-4 text-6xl font-black tracking-tight md:text-7xl'>
+        <h2 className='relative flex flex-wrap items-center justify-center mb-4 text-3xl font-black tracking-tight break-words whitespace-pre-line xs:text-4xl sm:text-5xl md:text-6xl gap-x-2 gap-y-2'>
           <span className='text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-indigo-500 bg-clip-text animate-gradient-x'>
             Code
           </span>
-          <span className='mx-4 text-white'>•</span>
+          <span className='mx-2 text-2xl text-white sm:text-3xl md:text-4xl'>
+            •
+          </span>
           <span
             className='text-transparent bg-gradient-to-r from-emerald-400 via-cyan-500 to-teal-500 bg-clip-text animate-gradient-x'
             style={{ animationDelay: '1s' }}
           >
             Create
           </span>
-          <span className='mx-4 text-white'>•</span>
+          <span className='mx-2 text-2xl text-white sm:text-3xl md:text-4xl'>
+            •
+          </span>
           <span
             className='text-transparent bg-gradient-to-r from-amber-400 via-orange-500 to-red-500 bg-clip-text animate-gradient-x'
             style={{ animationDelay: '2s' }}
@@ -135,9 +136,8 @@ const Skills = () => {
         />
       </motion.div>
 
-      {/* Subtitle with enhanced styling */}
       <motion.p
-        className='max-w-4xl mx-auto mb-20 text-xl font-light leading-relaxed text-center text-slate-300'
+        className='max-w-4xl mx-auto mb-20 text-lg font-light leading-relaxed text-center md:text-xl text-slate-300'
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6, duration: 1 }}
@@ -145,146 +145,123 @@ const Skills = () => {
         Crafting digital experiences with precision, passion, and cutting-edge
         technology.
         <br />
-        <span className='block mt-2 text-lg font-medium text-cyan-300'>
+        <span className='block mt-2 text-base font-medium md:text-lg text-cyan-300'>
           Where innovation meets execution ⚡
         </span>
       </motion.p>
 
-      {/* Enhanced graph container */}
-      <div className='relative flex items-end justify-between max-w-6xl gap-8 px-12 pt-16 pb-12 mx-auto border shadow-2xl border-slate-700/30 rounded-2xl bg-gradient-to-t from-slate-900/20 to-transparent backdrop-blur-sm'>
-        {/* Enhanced Y-axis */}
-        <div className='absolute top-0 w-px left-12 bottom-12 bg-gradient-to-t from-slate-600 to-slate-400 opacity-40' />
-
-        {/* Grid lines with enhanced styling */}
-        {[20, 40, 60, 80, 100].map(val => (
-          <div
-            key={val}
-            className='absolute w-full border-t left-12 border-slate-600 opacity-20'
-            style={{
-              bottom: `${48 + (val / 100) * maxBarHeight}px`
-            }}
-          >
-            <span className='absolute text-sm font-medium select-none -left-14 text-slate-400 bg-[#0b0b17] px-2 py-1 rounded'>
-              {val}%
-            </span>
-          </div>
-        ))}
-
-        {/* Enhanced skill bars */}
-        {skills.map(({ name, color, icon, level, shadowColor }, idx) => (
-          <motion.div
-            key={name}
-            className='relative flex flex-col items-center cursor-pointer group max-w-[90px] min-w-[80px]'
-            initial={{ height: 0 }}
-            animate={{ height: visible ? (level / 100) * maxBarHeight : 0 }}
-            transition={{
-              duration: 1.8,
-              ease: [0.25, 0.46, 0.45, 0.94],
-              delay: idx * 0.15
-            }}
-            onMouseEnter={() => setHoveredSkill(idx)}
-            onMouseLeave={() => setHoveredSkill(null)}
-            whileHover={{ scale: 1.05 }}
-          >
-            {/* Enhanced bar with multiple gradients */}
-            <div
-              className={`relative w-20 rounded-t-2xl bg-gradient-to-t ${color} shadow-xl ${shadowColor} overflow-hidden`}
-              style={{ height: '100%' }}
-            >
-              {/* Shimmer effect */}
-              <div className='absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer' />
-
-              {/* Enhanced glow */}
-              <div
-                className={`absolute -bottom-2 -left-2 -right-2 h-8 rounded-2xl bg-gradient-to-t ${color} opacity-60 blur-xl transition-all duration-300 ${
-                  hoveredSkill === idx ? 'opacity-80 blur-2xl' : ''
-                }`}
-              />
-
-              {/* Top highlight */}
-              <div className='absolute top-0 left-0 right-0 h-1 bg-white/30 rounded-t-2xl' />
-            </div>
-
-            {/* Enhanced icon with better glassmorphism */}
+      <div
+        className='relative flex flex-wrap justify-center gap-6 px-2 pt-12 pb-8 mx-auto overflow-x-auto border shadow-2xl md:px-12 border-slate-700/30 rounded-2xl bg-gradient-to-t from-slate-900/20 to-transparent backdrop-blur-sm max-w-7xl sm:gap-6 sm:pt-16 sm:pb-12 md:gap-8 md:pt-16 md:pb-12 lg:gap-10 lg:pt-16 lg:pb-12 scrollbar-thin scrollbar-thumb-slate-700/40 scrollbar-track-transparent '
+        style={{ WebkitOverflowScrolling: 'touch' }}
+      >
+        <div className='flex justify-center w-full min-w-0 gap-4 flex-nowrap sm:gap-6 md:gap-8 lg:gap-10 md:justify-start lg:justify-center'>
+          {skills.map(({ name, color, icon, level, shadowColor }, idx) => (
             <motion.div
-              className={`absolute flex items-center justify-center p-4 transform -translate-x-1/2 rounded-2xl shadow-2xl -top-16 left-1/2 bg-white/10 backdrop-blur-xl border border-white/20 w-16 h-16 ${shadowColor} transition-all duration-300`}
-              initial={{ y: -20, opacity: 0, rotate: -180 }}
-              animate={{ y: 0, opacity: 1, rotate: 0 }}
+              key={name}
+              className='relative flex flex-col items-center w-24 min-w-[5.5rem] sm:w-28 sm:min-w-[7rem] md:w-32 md:min-w-[8rem] lg:w-36 lg:min-w-[9rem] cursor-pointer group'
+              initial={{ height: 0 }}
+              animate={{ height: visible ? (level / 100) * maxBarHeight : 0 }}
               transition={{
-                delay: idx * 0.15 + 1.5,
-                duration: 0.8,
-                type: 'spring',
-                stiffness: 120,
-                damping: 15
+                duration: 1.8,
+                ease: [0.25, 0.46, 0.45, 0.94],
+                delay: idx * 0.15
               }}
-              whileHover={{
-                scale: 1.3,
-                rotate: 360,
-                boxShadow: '0 0 30px 8px rgba(255,255,255,0.3)',
-                transition: { duration: 0.3 }
-              }}
+              onMouseEnter={() => setHoveredSkill(idx)}
+              onMouseLeave={() => setHoveredSkill(null)}
+              whileHover={{ scale: 1.05 }}
             >
-              <div className='text-3xl text-white drop-shadow-lg'>{icon}</div>
-
-              {/* Icon glow */}
               <div
-                className={`absolute inset-0 rounded-2xl bg-gradient-to-t ${color} opacity-20 blur-xl -z-10`}
-              />
-            </motion.div>
-
-            {/* Enhanced percentage with animation */}
-            <motion.div
-              className={`mt-6 text-lg font-bold transition-all duration-300 ${
-                hoveredSkill === idx ? 'scale-110 text-white' : 'text-slate-300'
-              }`}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: visible ? 1 : 0, y: 0 }}
-              transition={{ delay: idx * 0.15 + 1.8, duration: 0.6 }}
-            >
-              <span
-                className={`bg-gradient-to-r ${color} bg-clip-text text-transparent font-black text-xl`}
+                className={`relative w-full rounded-t-2xl bg-gradient-to-t ${color} shadow-xl ${shadowColor} overflow-hidden`}
+                style={{ height: '100%' }}
               >
-                {level}%
-              </span>
-            </motion.div>
-
-            {/* Enhanced skill name */}
-            <motion.div
-              className={`mt-4 font-bold tracking-wide text-center transition-all duration-300 ${
-                hoveredSkill === idx ? 'text-white scale-105' : 'text-slate-200'
-              }`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: idx * 0.15 + 2, duration: 0.6 }}
-            >
-              {name}
-            </motion.div>
-
-            {/* Hover tooltip */}
-            {hoveredSkill === idx && (
-              <motion.div
-                className='absolute px-3 py-2 text-sm font-medium transform -translate-x-1/2 border rounded-lg -bottom-16 left-1/2 bg-black/80 backdrop-blur-sm border-white/10 whitespace-nowrap'
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-              >
-                {level >= 80
-                  ? 'Expert Level'
-                  : level >= 70
-                  ? 'Advanced'
-                  : level >= 60
-                  ? 'Intermediate'
-                  : 'Developing'}
+                <div className='absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer' />
                 <div
-                  className={`absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gradient-to-t ${color} rotate-45`}
+                  className={`absolute -bottom-2 -left-2 -right-2 h-8 rounded-2xl bg-gradient-to-t ${color} opacity-60 blur-xl transition-all duration-300 ${
+                    hoveredSkill === idx ? 'opacity-80 blur-2xl' : ''
+                  }`}
+                />
+                <div className='absolute top-0 left-0 right-0 h-1 bg-white/30 rounded-t-2xl' />
+              </div>
+
+              <motion.div
+                className={`absolute flex items-center justify-center p-4 transform -translate-x-1/2 rounded-2xl shadow-2xl -top-16 left-1/2 bg-white/10 backdrop-blur-xl border border-white/20 w-14 h-14 sm:w-16 sm:h-16 ${shadowColor} transition-all duration-300`}
+                initial={{ y: -20, opacity: 0, rotate: -180 }}
+                animate={{ y: 0, opacity: 1, rotate: 0 }}
+                transition={{
+                  delay: idx * 0.15 + 1.5,
+                  duration: 0.8,
+                  type: 'spring',
+                  stiffness: 120,
+                  damping: 15
+                }}
+                whileHover={{
+                  scale: 1.3,
+                  rotate: 360,
+                  transition: { duration: 0.3 }
+                }}
+              >
+                <div className='text-2xl text-white sm:text-3xl drop-shadow-lg'>
+                  {icon}
+                </div>
+                <div
+                  className={`absolute inset-0 rounded-2xl bg-gradient-to-t ${color} opacity-20 blur-xl -z-10`}
                 />
               </motion.div>
-            )}
-          </motion.div>
-        ))}
+
+              <motion.div
+                className={`mt-6 text-sm sm:text-lg font-bold transition-all duration-300 ${
+                  hoveredSkill === idx
+                    ? 'scale-110 text-white'
+                    : 'text-slate-300'
+                }`}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: visible ? 1 : 0, y: 0 }}
+                transition={{ delay: idx * 0.15 + 1.8, duration: 0.6 }}
+              >
+                <span
+                  className={`bg-gradient-to-r ${color} bg-clip-text text-transparent font-black`}
+                >
+                  {level}%
+                </span>
+              </motion.div>
+
+              <motion.div
+                className={`mt-3 sm:mt-4 text-xs sm:text-sm font-bold tracking-wide text-center transition-all duration-300 ${
+                  hoveredSkill === idx
+                    ? 'text-white scale-105'
+                    : 'text-slate-200'
+                }`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: idx * 0.15 + 2, duration: 0.6 }}
+              >
+                {name}
+              </motion.div>
+
+              {hoveredSkill === idx && (
+                <motion.div
+                  className='absolute px-3 py-2 text-xs font-medium transform -translate-x-1/2 border rounded-lg -bottom-16 left-1/2 bg-black/80 backdrop-blur-sm border-white/10 whitespace-nowrap'
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                >
+                  {level >= 80
+                    ? 'Expert Level'
+                    : level >= 70
+                    ? 'Advanced'
+                    : level >= 60
+                    ? 'Intermediate'
+                    : 'Developing'}
+                  <div
+                    className={`absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gradient-to-t ${color} rotate-45`}
+                  />
+                </motion.div>
+              )}
+            </motion.div>
+          ))}
+        </div>
       </div>
 
-      {/* Enhanced custom styles */}
       <style jsx>{`
         @keyframes shimmer {
           0% {
