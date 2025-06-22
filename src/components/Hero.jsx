@@ -1,9 +1,9 @@
+import React, { useMemo } from 'react'
 import { useState, useEffect } from 'react'
 import { FiArrowRight, FiGithub, FiLinkedin, FiTwitter } from 'react-icons/fi'
-import profileImage from '../assets/profile.jpg'
-import { motion } from 'framer-motion'
+import profileImage from '../assets/profile.webp'
 
-const Hero = () => {
+const HeroComponent = () => {
   const [typedText, setTypedText] = useState('')
   const [currentIndex, setCurrentIndex] = useState(0)
   const [currentTextIndex, setCurrentTextIndex] = useState(0)
@@ -33,6 +33,20 @@ const Hero = () => {
     return () => clearTimeout(timeout)
   }, [currentIndex, isDeleting, currentTextIndex])
 
+  const socialLinks = useMemo(
+    () => [
+      {
+        href: 'https://github.com/yourusername',
+        icon: <FiGithub size={22} />
+      },
+      {
+        href: 'https://linkedin.com/amul-adhikari-019990280/',
+        icon: <FiLinkedin size={22} />
+      }
+    ],
+    []
+  )
+
   return (
     <section
       id='home'
@@ -45,12 +59,7 @@ const Hero = () => {
 
       <div className='relative z-10 w-full mx-auto max-w-7xl'>
         <div className='grid items-center gap-20 md:grid-cols-2'>
-          <motion.div
-            className='space-y-10'
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
+          <div className='space-y-10'>
             <h1 className='text-5xl font-extrabold tracking-tight text-white md:text-7xl leading-tight drop-shadow-[0_2px_15px_rgba(0,0,0,0.25)]'>
               Hi, I'm{' '}
               <span className='text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-indigo-400'>
@@ -72,57 +81,40 @@ const Hero = () => {
             </p>
 
             <div className='flex items-center gap-6'>
-              <motion.a
+              <a
                 href='#contact'
                 className='inline-flex items-center gap-3 px-8 py-3 text-lg font-semibold text-white transition-all duration-300 rounded-full shadow-xl bg-gradient-to-r from-pink-600 via-purple-500 to-indigo-500 hover:from-pink-500 hover:to-purple-400 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-400 backdrop-blur-sm'
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
               >
                 Let's Connect <FiArrowRight />
-              </motion.a>
+              </a>
 
               <div className='flex gap-4'>
-                {[
-                  {
-                    href: 'https://github.com/yourusername',
-                    icon: <FiGithub size={22} />
-                  },
-                  {
-                    href: 'https://linkedin.com/amul-adhikari-019990280/',
-                    icon: <FiLinkedin size={22} />
-                  }
-                ].map(({ href, icon }, idx) => (
-                  <motion.a
+                {socialLinks.map(({ href, icon }, idx) => (
+                  <a
                     key={idx}
                     href={href}
                     target='_blank'
                     rel='noopener noreferrer'
                     className='p-3 bg-[#1e1e2f] hover:bg-[#2d2d44] text-primary-200 hover:text-white rounded-full shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500'
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
                   >
                     {icon}
-                  </motion.a>
+                  </a>
                 ))}
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            className='relative group'
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
+          <div className='relative group'>
             <div className='absolute inset-0 bg-gradient-to-r from-[#2a2a3b] to-[#3f3f5e] blur-[80px] rounded-full opacity-30 group-hover:opacity-40 transition-opacity duration-300'></div>
             <div className='relative w-72 h-72 mx-auto rounded-full border-[6px] border-[#28283a] overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.3)] bg-[#1a1a2e]/90 group-hover:scale-[1.05] transition-transform duration-500'>
               <img
                 src={profileImage}
                 alt='Profile'
                 className='w-full h-full object-cover scale-[1.02]'
+                loading='lazy'
               />
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
 
@@ -146,4 +138,5 @@ const Hero = () => {
   )
 }
 
+const Hero = React.memo(HeroComponent)
 export default Hero

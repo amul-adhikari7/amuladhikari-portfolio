@@ -8,57 +8,59 @@ import {
   Star,
   TrendingUp
 } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 
-const skills = [
-  {
-    name: 'React',
-    color: 'from-sky-400 to-blue-500',
-    icon: <Code />,
-    level: 90,
-    shadowColor: 'shadow-sky-500/30'
-  },
-  {
-    name: 'JavaScript',
-    color: 'from-yellow-300 to-yellow-500',
-    icon: <Zap />,
-    level: 85,
-    shadowColor: 'shadow-yellow-500/30'
-  },
-  {
-    name: 'Node.js',
-    color: 'from-green-400 to-emerald-500',
-    icon: <Database />,
-    level: 75,
-    shadowColor: 'shadow-emerald-500/30'
-  },
-  {
-    name: 'Tailwind CSS',
-    color: 'from-cyan-400 to-teal-400',
-    icon: <Layers />,
-    level: 80,
-    shadowColor: 'shadow-cyan-500/30'
-  },
-  {
-    name: 'UI/UX Design',
-    color: 'from-purple-400 to-pink-400',
-    icon: <Figma />,
-    level: 70,
-    shadowColor: 'shadow-purple-500/30'
-  },
-  {
-    name: 'SCSS',
-    color: 'from-pink-400 to-rose-400',
-    icon: <Feather />,
-    level: 65,
-    shadowColor: 'shadow-pink-500/30'
-  }
-]
+const SkillsComponent = () => {
+  const skills = useMemo(
+    () => [
+      {
+        name: 'React',
+        color: 'from-sky-400 to-blue-500',
+        icon: <Code />,
+        level: 90,
+        shadowColor: 'shadow-sky-500/30'
+      },
+      {
+        name: 'JavaScript',
+        color: 'from-yellow-300 to-yellow-500',
+        icon: <Zap />,
+        level: 85,
+        shadowColor: 'shadow-yellow-500/30'
+      },
+      {
+        name: 'Node.js',
+        color: 'from-green-400 to-emerald-500',
+        icon: <Database />,
+        level: 75,
+        shadowColor: 'shadow-emerald-500/30'
+      },
+      {
+        name: 'Tailwind CSS',
+        color: 'from-cyan-400 to-teal-400',
+        icon: <Layers />,
+        level: 80,
+        shadowColor: 'shadow-cyan-500/30'
+      },
+      {
+        name: 'UI/UX Design',
+        color: 'from-purple-400 to-pink-400',
+        icon: <Figma />,
+        level: 70,
+        shadowColor: 'shadow-purple-500/30'
+      },
+      {
+        name: 'SCSS',
+        color: 'from-pink-400 to-rose-400',
+        icon: <Feather />,
+        level: 65,
+        shadowColor: 'shadow-pink-500/30'
+      }
+    ],
+    []
+  )
 
-const maxBarHeight = 220
-
-const Skills = () => {
+  const maxBarHeight = 220
   const [visible, setVisible] = useState(false)
   const [hoveredSkill, setHoveredSkill] = useState(null)
 
@@ -87,8 +89,9 @@ const Skills = () => {
       <motion.div
         className='flex items-center justify-center mb-6'
         initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
+        whileInView={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6 }}
+        viewport={{ amount: 0.2 }}
       >
         <div className='flex items-center gap-2 px-4 py-2 text-sm font-medium border rounded-full text-cyan-300 bg-cyan-500/10 border-cyan-500/20 backdrop-blur-sm'>
           <TrendingUp className='w-4 h-4' />
@@ -100,8 +103,9 @@ const Skills = () => {
       <motion.div
         className='mb-8 text-center'
         initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
+        whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
+        viewport={{ amount: 0.2 }}
       >
         <h2 className='relative flex flex-wrap items-center justify-center mb-4 text-3xl font-black tracking-tight break-words whitespace-pre-line xs:text-4xl sm:text-5xl md:text-6xl gap-x-2 gap-y-2'>
           <span className='text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-indigo-500 bg-clip-text animate-gradient-x'>
@@ -131,8 +135,9 @@ const Skills = () => {
           className='h-1 mx-auto mb-6 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-60'
           style={{ width: '200px' }}
           initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
+          whileInView={{ scaleX: 1 }}
           transition={{ duration: 1.2, delay: 0.8 }}
+          viewport={{ amount: 0.2 }}
         />
       </motion.div>
 
@@ -305,4 +310,5 @@ const Skills = () => {
   )
 }
 
+const Skills = React.memo(SkillsComponent)
 export default Skills

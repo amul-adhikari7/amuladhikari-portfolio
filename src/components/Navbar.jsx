@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { FiMenu, FiX, FiGithub } from 'react-icons/fi'
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -147,7 +147,7 @@ const Navbar = () => {
         >
           <Link
             to='/'
-            className='text-lg font-bold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 transition-colors duration-300 sm:text-xl hover:from-blue-300 hover:to-purple-300'
+            className='text-lg font-bold tracking-wide text-transparent transition-colors duration-300 bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 sm:text-xl hover:from-blue-300 hover:to-purple-300'
           >
             Amul Adhikari
           </Link>

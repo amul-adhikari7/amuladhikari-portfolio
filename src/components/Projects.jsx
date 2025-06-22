@@ -1,50 +1,53 @@
+import React, { useMemo } from 'react'
 import { Github, ExternalLink, Code, Zap, Star, ArrowRight } from 'lucide-react'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 
-const projects = [
-  {
-    id: 1,
-    title: 'Musician Portfolio Website',
-    description:
-      'A stunning musician portfolio showcasing music, videos, and events with seamless user experience.',
-    technologies: ['React.js', 'Tailwind CSS', 'EmailJS'],
-    image:
-      'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600&h=400&fit=crop&crop=center',
-    githubUrl: 'https://github.com/amul-adhikari7/musician-portfolio',
-    liveUrl: '#',
-    featured: true,
-    category: 'Frontend'
-  },
-  {
-    id: 2,
-    title: 'Weather App',
-    description:
-      'Real-time weather application with beautiful UI and comprehensive weather data visualization.',
-    technologies: ['React.js', 'Tailwind CSS', 'OpenWeatherMap API'],
-    image:
-      'https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=600&h=400&fit=crop&crop=center',
-    githubUrl: 'https://github.com/amul-adhikari7/weather-app',
-    liveUrl: '#',
-    featured: false,
-    category: 'Full Stack'
-  },
-  {
-    id: 3,
-    title: 'Hotel Reservation System',
-    description:
-      'Complete hotel booking platform with advanced reservation management and payment integration.',
-    technologies: ['React.js', 'Express.js', 'Tailwind CSS'],
-    image:
-      'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop&crop=center',
-    githubUrl: 'https://github.com/amul-adhikari7/StayEase.git',
-    liveUrl: '#',
-    featured: true,
-    category: 'Full Stack'
-  }
-]
-
-const Projects = () => {
+const ProjectsComponent = () => {
+  const projects = useMemo(
+    () => [
+      {
+        id: 1,
+        title: 'Musician Portfolio Website',
+        description:
+          'A stunning musician portfolio showcasing music, videos, and events with seamless user experience.',
+        technologies: ['React.js', 'Tailwind CSS', 'EmailJS'],
+        image:
+          'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600&h=400&fit=crop&crop=center',
+        githubUrl: 'https://github.com/amul-adhikari7/musician-portfolio',
+        liveUrl: '#',
+        featured: true,
+        category: 'Frontend'
+      },
+      {
+        id: 2,
+        title: 'Weather App',
+        description:
+          'Real-time weather application with beautiful UI and comprehensive weather data visualization.',
+        technologies: ['React.js', 'Tailwind CSS', 'OpenWeatherMap API'],
+        image:
+          'https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=600&h=400&fit=crop&crop=center',
+        githubUrl: 'https://github.com/amul-adhikari7/weather-app',
+        liveUrl: '#',
+        featured: false,
+        category: 'Full Stack'
+      },
+      {
+        id: 3,
+        title: 'Hotel Reservation System',
+        description:
+          'Complete hotel booking platform with advanced reservation management and payment integration.',
+        technologies: ['React.js', 'Express.js', 'Tailwind CSS'],
+        image:
+          'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop&crop=center',
+        githubUrl: 'https://github.com/amul-adhikari7/StayEase.git',
+        liveUrl: '#',
+        featured: true,
+        category: 'Full Stack'
+      }
+    ],
+    []
+  )
   const [hoveredProject, setHoveredProject] = useState(null)
 
   const containerVariants = {
@@ -94,7 +97,7 @@ const Projects = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          viewport={{ amount: 0.2 }}
         >
           {/* Pre-heading badge */}
           <motion.div
@@ -102,7 +105,7 @@ const Projects = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
+            viewport={{ amount: 0.2 }}
           >
             <div className='flex items-center gap-2 px-4 py-2 text-sm font-medium text-purple-300 border rounded-full bg-purple-500/10 border-purple-500/20 backdrop-blur-sm'>
               <Code className='w-4 h-4' />
@@ -135,7 +138,7 @@ const Projects = () => {
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             transition={{ duration: 1.2, delay: 0.5 }}
-            viewport={{ once: true }}
+            viewport={{ amount: 0.2 }}
           />
         </motion.div>
 
@@ -145,15 +148,18 @@ const Projects = () => {
           variants={containerVariants}
           initial='hidden'
           whileInView='visible'
-          viewport={{ once: true, margin: '-100px' }}
+          viewport={{ amount: 0.2 }}
         >
-          {projects.map((project, index) => (
+          {projects.map(project => (
             <motion.div
               key={project.id}
               variants={cardVariants}
               className='relative group'
               onMouseEnter={() => setHoveredProject(project.id)}
               onMouseLeave={() => setHoveredProject(null)}
+              initial='hidden'
+              whileInView='visible'
+              viewport={{ amount: 0.2 }}
             >
               {/* Featured badge */}
               {project.featured && (
@@ -170,6 +176,7 @@ const Projects = () => {
                     src={project.image}
                     alt={project.title}
                     className='object-cover w-full h-full transition-all duration-700 group-hover:scale-110'
+                    loading='lazy'
                   />
 
                   {/* Gradient overlay */}
@@ -258,7 +265,7 @@ const Projects = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          viewport={{ once: true }}
+          viewport={{ amount: 0.2 }}
         >
           <motion.a
             href='/projects'
@@ -306,4 +313,5 @@ const Projects = () => {
   )
 }
 
+const Projects = React.memo(ProjectsComponent)
 export default Projects
