@@ -38,12 +38,9 @@ const AboutComponent = () => {
                 <img
                   src={aboutImage}
                   alt='About'
-                  onError={e => {
-                    e.target.onerror = null
-                    e.target.src = 'https://via.placeholder.com/400x500?text=AJ'
-                  }}
-                  className='object-cover w-full h-full min-h-[340px] min-w-[260px] max-h-[420px] max-w-[320px] transition-transform duration-700 ease-in-out rounded-3xl group-hover:scale-105 shadow-xl'
+                  className='object-cover w-full h-full pointer-events-none select-none rounded-3xl'
                   loading='lazy'
+                  draggable='false'
                 />
               </div>
               <div className='absolute inset-0 transition-opacity duration-500 opacity-0 bg-gradient-to-t from-black/60 via-transparent to-transparent group-hover:opacity-100 rounded-3xl'></div>
@@ -102,10 +99,10 @@ const AboutComponent = () => {
           50% { transform: translateY(10px); }
         }
         .animate-float {
-          animation: float 9s ease-in-out infinite;
+          animation: float 6s ease-in-out infinite;
         }
         .animate-float2 {
-          animation: float2 11s ease-in-out infinite;
+          animation: float2 8s ease-in-out infinite;
         }
       `}</style>
     </section>

@@ -112,6 +112,7 @@ const HeroComponent = () => {
                 alt='Profile'
                 className='w-full h-full object-cover scale-[1.02]'
                 loading='lazy'
+                draggable='false'
               />
             </div>
           </div>

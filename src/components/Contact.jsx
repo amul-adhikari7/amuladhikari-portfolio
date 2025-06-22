@@ -66,19 +66,31 @@ const Contact = React.memo(() => {
     () => [
       {
         href: 'mailto:your@email.com',
-        icon: <FiMail size={24} />,
+        icon: React.createElement(FiMail, {
+          size: 24,
+          'aria-label': 'Email',
+          tabIndex: -1
+        }),
         label: 'Email',
         color: 'from-red-500 to-pink-500'
       },
       {
         href: 'https://github.com/amul-adhikari7',
-        icon: <FiGithub size={24} />,
+        icon: React.createElement(FiGithub, {
+          size: 24,
+          'aria-label': 'GitHub',
+          tabIndex: -1
+        }),
         label: 'GitHub',
         color: 'from-gray-600 to-gray-800'
       },
       {
         href: 'https://linkedin.com/in/amul-adhikari-019990280/',
-        icon: <FiLinkedin size={24} />,
+        icon: React.createElement(FiLinkedin, {
+          size: 24,
+          'aria-label': 'LinkedIn',
+          tabIndex: -1
+        }),
         label: 'LinkedIn',
         color: 'from-blue-600 to-blue-800'
       }
@@ -211,9 +223,11 @@ const Contact = React.memo(() => {
                 href={item.href}
                 target='_blank'
                 rel='noopener noreferrer'
-                className={`group relative p-4 rounded-2xl bg-gradient-to-br ${item.color} shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden`}
-                whileHover={{ scale: 1.1, y: -5 }}
-                whileTap={{ scale: 0.95 }}
+                className={`group relative p-4 rounded-2xl bg-gradient-to-br ${item.color} shadow-lg hover:shadow-2xl transition-all duration-200 overflow-hidden`}
+                whileHover={{ scale: 1.06, y: -3 }}
+                whileTap={{ scale: 0.97 }}
+                onTouchStart={() => setFocusedField(item.label)}
+                onTouchEnd={() => setFocusedField('')}
               >
                 <div className='absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700' />
                 <div className='relative text-white'>{item.icon}</div>

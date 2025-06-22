@@ -175,8 +175,9 @@ const ProjectsComponent = () => {
                   <img
                     src={project.image}
                     alt={project.title}
-                    className='object-cover w-full h-full transition-all duration-700 group-hover:scale-110'
+                    className='object-cover w-full h-48 rounded-2xl sm:h-56 md:h-48 lg:h-40 xl:h-48 shadow-lg transition-transform duration-300 group-hover:scale-105'
                     loading='lazy'
+                    draggable='false'
                   />
 
                   {/* Gradient overlay */}

@@ -8,7 +8,7 @@ import {
   Star,
   TrendingUp
 } from 'lucide-react'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState, Suspense } from 'react'
 import { motion } from 'framer-motion'
 
 const SkillsComponent = () => {
@@ -17,42 +17,66 @@ const SkillsComponent = () => {
       {
         name: 'React',
         color: 'from-sky-400 to-blue-500',
-        icon: <Code />,
+        icon: (
+          <Suspense fallback={null}>
+            <Code />
+          </Suspense>
+        ),
         level: 90,
         shadowColor: 'shadow-sky-500/30'
       },
       {
         name: 'JavaScript',
         color: 'from-yellow-300 to-yellow-500',
-        icon: <Zap />,
+        icon: (
+          <Suspense fallback={null}>
+            <Zap />
+          </Suspense>
+        ),
         level: 85,
         shadowColor: 'shadow-yellow-500/30'
       },
       {
         name: 'Node.js',
         color: 'from-green-400 to-emerald-500',
-        icon: <Database />,
+        icon: (
+          <Suspense fallback={null}>
+            <Database />
+          </Suspense>
+        ),
         level: 75,
         shadowColor: 'shadow-emerald-500/30'
       },
       {
         name: 'Tailwind CSS',
         color: 'from-cyan-400 to-teal-400',
-        icon: <Layers />,
+        icon: (
+          <Suspense fallback={null}>
+            <Layers />
+          </Suspense>
+        ),
         level: 80,
         shadowColor: 'shadow-cyan-500/30'
       },
       {
         name: 'UI/UX Design',
         color: 'from-purple-400 to-pink-400',
-        icon: <Figma />,
+        icon: (
+          <Suspense fallback={null}>
+            <Figma />
+          </Suspense>
+        ),
         level: 70,
         shadowColor: 'shadow-purple-500/30'
       },
       {
         name: 'SCSS',
         color: 'from-pink-400 to-rose-400',
-        icon: <Feather />,
+        icon: (
+          <Suspense fallback={null}>
+            <Feather />
+          </Suspense>
+        ),
         level: 65,
         shadowColor: 'shadow-pink-500/30'
       }
@@ -171,13 +195,15 @@ const SkillsComponent = () => {
               initial={{ height: 0 }}
               animate={{ height: visible ? (level / 100) * maxBarHeight : 0 }}
               transition={{
-                duration: 1.8,
+                duration: 0.8, // reduced for mobile perf
                 ease: [0.25, 0.46, 0.45, 0.94],
-                delay: idx * 0.15
+                delay: idx < 3 ? idx * 0.08 : 0 // only stagger first 3
               }}
               onMouseEnter={() => setHoveredSkill(idx)}
               onMouseLeave={() => setHoveredSkill(null)}
-              whileHover={{ scale: 1.08 }}
+              onTouchStart={() => setHoveredSkill(idx)}
+              onTouchEnd={() => setHoveredSkill(null)}
+              whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.98 }}
             >
               <div

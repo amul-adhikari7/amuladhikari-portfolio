@@ -110,6 +110,15 @@ const Footer = React.memo(() => {
         .animate-float2 {
           animation: float 10s ease-in-out infinite;
         }
+
+        @media (max-width: 640px) {
+          .animate-float {
+            animation-duration: 6s;
+          }
+          .animate-float2 {
+            animation-duration: 8s;
+          }
+        }
       `}</style>
     </footer>
   )
