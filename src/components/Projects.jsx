@@ -21,13 +21,13 @@ const ProjectsComponent = () => {
       },
       {
         id: 2,
-        title: 'Weather App',
+        title: 'Fatafatsewa',
         description:
-          'Real-time weather application with beautiful UI and comprehensive weather data visualization.',
-        technologies: ['React.js', 'Tailwind CSS', 'OpenWeatherMap API'],
+          'Real-world ecommerce application with beautiful UI and basic functionalities.',
+        technologies: ['React.js', 'Tailwind CSS', 'REST API'],
         image:
           'https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=600&h=400&fit=crop&crop=center',
-        githubUrl: 'https://github.com/amul-adhikari7/weather-app',
+        githubUrl: 'https://github.com/amul-adhikari7/fatafatsewa',
         liveUrl: '#',
         featured: false,
         category: 'Full Stack'
@@ -37,7 +37,7 @@ const ProjectsComponent = () => {
         title: 'Hotel Reservation System',
         description:
           'Complete hotel booking platform with advanced reservation management and payment integration.',
-        technologies: ['React.js', 'Express.js', 'Tailwind CSS'],
+        technologies: ['React.js', 'Express.js', 'Node Js', 'Tailwind CSS'],
         image:
           'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop&crop=center',
         githubUrl: 'https://github.com/amul-adhikari7/StayEase.git',
@@ -115,13 +115,12 @@ const ProjectsComponent = () => {
           </motion.div>
 
           {/* Main heading */}
-          <h2 className='mb-6 text-5xl font-black tracking-tight md:text-6xl'>
+          <h2 className='mb-6 text-3xl font-black tracking-tight sm:text-4xl md:text-5xl lg:text-6xl'>
             <span className='text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text'>
               Featured
             </span>
-            <span className='mx-4 text-white'>Projects</span>
+            <span className='mx-2 text-white sm:mx-4'>Projects</span>
           </h2>
-
           {/* Subtitle */}
           <p className='max-w-3xl mx-auto text-xl font-light leading-relaxed text-slate-300'>
             Explore my latest creations where innovation meets functionality.
@@ -175,7 +174,7 @@ const ProjectsComponent = () => {
                   <img
                     src={project.image}
                     alt={project.title}
-                    className='object-cover w-full h-48 rounded-2xl sm:h-56 md:h-48 lg:h-40 xl:h-48 shadow-lg transition-transform duration-300 group-hover:scale-105'
+                    className='object-cover w-full h-48 transition-transform duration-300 shadow-lg rounded-2xl sm:h-56 md:h-48 lg:h-40 xl:h-48 group-hover:scale-105'
                     loading='lazy'
                     draggable='false'
                   />
