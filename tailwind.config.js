@@ -69,6 +69,11 @@ export default {
         "fade-in": "fade-in 0.5s ease-out",
         "bounce-slow": "bounce 3s infinite",
         "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        slideInLeft: "slideInLeft 0.6s ease-out forwards",
+        slideInRight: "slideInRight 0.6s ease-out forwards",
+        slideInUp: "slideInUp 0.6s ease-out forwards",
+        slideUpFade: "slideUpFade 0.6s ease-out forwards",
+        spin: "spin 1s linear infinite",
       },
       keyframes: {
         gradient: {
@@ -83,10 +88,12 @@ export default {
         },
         float: {
           "0%, 100%": {
-            transform: "translateY(0)",
+            transform: "translateY(0) scale(0.5)",
+            opacity: "0",
           },
           "50%": {
-            transform: "translateY(-20px)",
+            transform: "translateY(-20px) scale(1.5)",
+            opacity: "1",
           },
         },
         glow: {
@@ -110,6 +117,26 @@ export default {
         "fade-in": {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
+        },
+        slideInLeft: {
+          from: { opacity: "0", transform: "translateX(-1rem)" },
+          to: { opacity: "1", transform: "translateX(0)" },
+        },
+        slideInRight: {
+          from: { opacity: "0", transform: "translateX(1rem)" },
+          to: { opacity: "1", transform: "translateX(0)" },
+        },
+        slideInUp: {
+          from: { opacity: "0", transform: "translateY(1rem)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        slideUpFade: {
+          from: { opacity: "0", transform: "translateY(1rem)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        spin: {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
         },
       },
       backdropBlur: {

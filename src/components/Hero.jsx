@@ -1,7 +1,6 @@
-import React, { useMemo } from 'react'
-import { useState, useEffect } from 'react'
-import { FiArrowRight, FiGithub, FiLinkedin, FiTwitter } from 'react-icons/fi'
-import profileImage from '../assets/profile.webp'
+﻿import React, { useMemo, useState, useEffect } from 'react'
+import { FiArrowRight, FiGithub, FiLinkedin } from 'react-icons/fi'
+import { ExternalLink } from 'lucide-react'
 
 const HeroComponent = () => {
   const [typedText, setTypedText] = useState('')
@@ -9,8 +8,45 @@ const HeroComponent = () => {
   const [currentTextIndex, setCurrentTextIndex] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
 
+  const projects = useMemo(
+    () => [
+      {
+        id: 1,
+        title: 'MindForge  AI-Integrated Blog',
+        description:
+          'An AI-integrated blogging platform with admin dashboard for content oversight.',
+        image:
+          'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=600&h=400&fit=crop&crop=center',
+        githubUrl:
+          'https://github.com/amul-adhikari7/Mindforge-Forging-ideas-with-Artificial-intelligence.git',
+        liveUrl: '#'
+      },
+      {
+        id: 2,
+        title: 'StayEase  Hotel Recommendation',
+        description:
+          'A MERN stack hotel recommendation system with location-based features.',
+        image:
+          'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop&crop=center',
+        githubUrl: 'https://github.com/amul-adhikari7/StayEase.git',
+        liveUrl: '#'
+      },
+      {
+        id: 3,
+        title: 'Fatafatsewa  E-commerce',
+        description:
+          'Modern e-commerce platform with product management and user authentication.',
+        image:
+          'https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=600&h=400&fit=crop&crop=center',
+        githubUrl: 'https://github.com/amul-adhikari7/fatafatsewa.git',
+        liveUrl: '#'
+      }
+    ],
+    []
+  )
+
   useEffect(() => {
-    const texts = ['Frontend Developer', 'UI/UX Designer', 'Creative Coder']
+    const texts = ['Frontend Developer', 'UI Designer', 'Web Developer']
     const speed = isDeleting ? 50 : 150
     const current = texts[currentTextIndex]
 
@@ -36,12 +72,14 @@ const HeroComponent = () => {
   const socialLinks = useMemo(
     () => [
       {
-        href: 'https://github.com/yourusername',
-        icon: <FiGithub size={22} />
+        href: 'https://github.com/amul-adhikari7',
+        icon: <FiGithub size={22} />,
+        label: 'GitHub'
       },
       {
-        href: 'https://linkedin.com/amul-adhikari-019990280/',
-        icon: <FiLinkedin size={22} />
+        href: 'https://linkedin.com/in/amul-adhikari-019990280/',
+        icon: <FiLinkedin size={22} />,
+        label: 'LinkedIn'
       }
     ],
     []
@@ -50,52 +88,59 @@ const HeroComponent = () => {
   return (
     <section
       id='home'
-      className='relative flex flex-col items-center justify-center min-h-screen px-6 py-20 overflow-hidden md:py-32 bg-gradient-to-tr from-[#0f0f1a] via-[#0a0a14] to-[#12121f] md:flex-row'
+      className='relative flex items-center min-h-screen px-6 py-20 bg-neutral-950 md:py-32'
     >
-      <div className='absolute inset-0 pointer-events-none'>
-        <div className='absolute w-[480px] h-[300px] bg-[#3b3b59]/20 blur-[90px] rounded-full top-[25%] left-[20%] animate-float' />
-        <div className='absolute w-[540px] h-[320px] bg-[#5c4c8d]/20 blur-[100px] rounded-full top-[30%] right-[20%] animate-float2' />
-      </div>
+      {/* Subtle gradient background */}
+      <div className='absolute inset-0 bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 opacity-50' />
 
+      {/* Glassmorphism accent */}
+      <div className='absolute right-0 top-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl' />
+      <div className='absolute left-0 bottom-1/4 w-96 h-96 bg-neutral-800/10 rounded-full blur-3xl' />
       <div className='relative z-10 w-full mx-auto max-w-7xl'>
-        <div className='grid items-center gap-20 md:grid-cols-2'>
-          <div className='space-y-10'>
-            <h1 className='text-5xl font-extrabold tracking-tight text-white md:text-7xl leading-tight drop-shadow-[0_2px_15px_rgba(0,0,0,0.25)]'>
-              Hi, I'm{' '}
-              <span className='text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-indigo-400'>
-                Amul
-              </span>
+        <div className='grid gap-16 md:grid-cols-12 md:gap-24'>
+          {/* Main Content */}
+          <div className='space-y-8 md:col-span-7'>
+            <div className='inline-block px-4 py-2 text-sm tracking-wider text-neutral-400 bg-neutral-900/50 rounded-full border border-neutral-800/50 backdrop-blur-sm'>
+              Frontend Developer & UI Engineer
+            </div>
+
+            <h1 className='text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl opacity-0 animate-slideUpFade [animation-delay:400ms]'>
+              Building Digital
+              <br />
+              <span className='text-blue-400'>Experiences</span>
             </h1>
 
-            <div className='relative h-16'>
-              <h2 className='text-2xl font-semibold text-white md:text-4xl text-primary-200'>
-                I'm a{' '}
-                <span className='font-bold text-accent-400'>{typedText}</span>
-                <span className='inline-block w-1 h-8 ml-1 rounded-sm bg-accent-400 animate-pulse'></span>
+            <div className='h-16 opacity-0 animate-slideUpFade [animation-delay:600ms]'>
+              <h2 className='text-xl font-medium sm:text-2xl md:text-3xl text-neutral-300'>
+                I am a <span className='font-bold text-white'>{typedText}</span>
+                <span className='inline-block w-0.5 h-6 ml-1 bg-blue-400 animate-blink' />
               </h2>
             </div>
 
-            <p className='max-w-xl text-lg leading-relaxed text-white md:text-xl text-primary-300'>
-              Designing seamless interfaces and engineering rich interactions
-              that bring ideas to life — one pixel and line of code at a time.
+            <p className='max-w-2xl text-lg leading-relaxed text-neutral-400 md:text-xl opacity-0 animate-slideUpFade [animation-delay:800ms]'>
+              Crafting high-performance web applications with modern
+              technologies and pixel-perfect attention to detail.
             </p>
 
-            <div className='flex items-center gap-6'>
+            <div className='flex flex-wrap items-center gap-6 opacity-0 animate-slideUpFade [animation-delay:1000ms]'>
               <a
                 href='#contact'
-                className='inline-flex items-center gap-3 px-8 py-3 text-lg font-semibold text-white transition-all duration-300 rounded-full shadow-xl bg-gradient-to-r from-pink-600 via-purple-500 to-indigo-500 hover:from-pink-500 hover:to-purple-400 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-400 backdrop-blur-sm'
+                className='group inline-flex items-center gap-2 px-8 py-4 text-base font-medium transition-all duration-300 border md:text-lg text-white border-neutral-800 hover:bg-neutral-800 rounded-lg overflow-hidden relative'
               >
-                Let's Connect <FiArrowRight />
+                <span className='relative z-10'>Get in Touch</span>
+                <FiArrowRight className='relative z-10 transition-transform duration-300 group-hover:translate-x-1' />
+                <div className='absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-400 opacity-0 group-hover:opacity-10 transition-opacity duration-300' />
               </a>
 
               <div className='flex gap-4'>
-                {socialLinks.map(({ href, icon }, idx) => (
+                {socialLinks.map(({ href, icon, label }, idx) => (
                   <a
                     key={idx}
                     href={href}
                     target='_blank'
                     rel='noopener noreferrer'
-                    className='p-3 bg-[#1e1e2f] hover:bg-[#2d2d44] text-primary-200 hover:text-white rounded-full shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500'
+                    aria-label={label}
+                    className='p-3 transition-all duration-300 border rounded-lg text-neutral-400 border-neutral-800 hover:text-white hover:border-neutral-700 hover:bg-neutral-800/50 hover:scale-110 hover:-translate-y-0.5 active:scale-95'
                   >
                     {icon}
                   </a>
@@ -104,37 +149,51 @@ const HeroComponent = () => {
             </div>
           </div>
 
-          <div className='relative group'>
-            <div className='absolute inset-0 bg-gradient-to-r from-[#2a2a3b] to-[#3f3f5e] blur-[80px] rounded-full opacity-30 group-hover:opacity-40 transition-opacity duration-300'></div>
-            <div className='relative w-72 h-72 mx-auto rounded-full border-[6px] border-[#28283a] overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.3)] bg-[#1a1a2e]/90 group-hover:scale-[1.05] transition-transform duration-500'>
-              <img
-                src={profileImage}
-                alt='Profile'
-                className='w-full h-full object-cover scale-[1.02]'
-                loading='lazy'
-                draggable='false'
-              />
+          {/* Featured Work Preview */}
+          <div className='md:col-span-5 opacity-0 animate-slideInRight [animation-delay:600ms]'>
+            <div className='relative p-6 rounded-lg border border-neutral-800 bg-neutral-900/30 backdrop-blur-sm'>
+              <div className='absolute -top-3 left-6'>
+                <span className='px-4 py-1 text-xs tracking-wider text-neutral-400 bg-neutral-900 rounded-full border border-neutral-800'>
+                  FEATURED PROJECTS
+                </span>
+              </div>
+              <div className='space-y-6 mt-4'>
+                {projects.slice(0, 2).map(project => (
+                  <a
+                    key={project.id}
+                    href={project.githubUrl}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='group flex items-center gap-4 p-2 rounded-lg transition-all duration-300 hover:bg-neutral-800/30 hover:translate-x-1'
+                  >
+                    <div className='w-24 h-16 rounded-lg overflow-hidden'>
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className='w-full h-full object-cover'
+                      />
+                    </div>
+                    <div className='flex-1 min-w-0'>
+                      <h3 className='text-sm font-medium text-white truncate'>
+                        {project.title}
+                      </h3>
+                      <p className='text-xs text-neutral-400 truncate'>
+                        {project.description}
+                      </p>
+                      <div className='mt-1 flex items-center gap-2'>
+                        <FiGithub className='w-3 h-3 text-neutral-500' />
+                        {project.liveUrl !== '#' && (
+                          <ExternalLink className='w-3 h-3 text-neutral-500' />
+                        )}
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-12px); }
-        }
-        @keyframes float2 {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(12px); }
-        }
-        .animate-float {
-          animation: float 9s ease-in-out infinite;
-        }
-        .animate-float2 {
-          animation: float2 11s ease-in-out infinite;
-        }
-      `}</style>
     </section>
   )
 }
