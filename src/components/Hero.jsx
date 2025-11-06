@@ -1,4 +1,5 @@
 ﻿import React, { useMemo, useState, useEffect, useRef, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { FiArrowRight, FiGithub, FiLinkedin } from 'react-icons/fi'
 import { ExternalLink } from 'lucide-react'
 
@@ -144,12 +145,16 @@ const HeroComponent = () => {
     return [w400, w800, w1200].join(', ')
   }, [])
 
-  const contactHref = '#contact'
+  const navigate = useNavigate()
   const handleContactClick = useCallback(() => {
-    // smooth scroll to contact (delegated to browser) - keep minimal
-    const el = document.querySelector(contactHref)
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }, [])
+    // First scroll to contact section
+    const element = document.getElementById('contact')
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+    // Then update URL
+    navigate({ pathname: '/', hash: 'contact' })
+  }, [navigate])
 
   return (
     <section

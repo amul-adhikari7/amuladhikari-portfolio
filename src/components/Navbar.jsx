@@ -1,4 +1,5 @@
 ﻿import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { FiMenu, FiX, FiDownload } from 'react-icons/fi'
 import resumePDF from '../assets/Amul_Adhikari_Resume.pdf'
 
@@ -7,12 +8,37 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false)
 
   const navLinks = [
-    { href: '#home', label: 'Home' },
-    { href: '#about', label: 'About' },
-    { href: '#skills', label: 'Skills' },
-    { href: '#projects', label: 'Projects' },
-    { href: '#contact', label: 'Contact' }
+    { href: 'home', label: 'Home' },
+    { href: 'about', label: 'About' },
+    { href: 'skills', label: 'Skills' },
+    { href: 'projects', label: 'Projects' },
+    { href: 'contact', label: 'Contact' }
   ]
+
+  // Handle hash-based navigation scroll
+  useEffect(() => {
+    // Function to handle hash changes and scroll
+    const scrollToHash = () => {
+      const hash = window.location.hash.replace('#', '')
+      if (hash) {
+        setTimeout(() => {
+          const element = document.getElementById(hash)
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' })
+          }
+        }, 0)
+      }
+    }
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', scrollToHash)
+    // Scroll on initial load if there's a hash
+    if (window.location.hash) {
+      scrollToHash()
+    }
+
+    return () => window.removeEventListener('hashchange', scrollToHash)
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,8 +49,13 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const handleNavClick = () => {
+  const handleNavClick = href => {
     setIsOpen(false)
+    // First scroll to the element
+    const element = document.getElementById(href)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
   }
 
   return (
@@ -40,7 +71,11 @@ const Navbar = () => {
         <div className='w-full px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl'>
           <div className='flex items-center justify-between w-full'>
             {/* Logo */}
-            <a href='#home' className='flex items-center gap-3'>
+            <Link
+              to={{ pathname: '/', hash: 'home' }}
+              className='flex items-center gap-3'
+              onClick={() => handleNavClick('home')}
+            >
               <div className='w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-purple-500 flex items-center justify-center shadow-lg'>
                 <span className='text-sm font-extrabold text-white'>A</span>
               </div>
@@ -50,22 +85,23 @@ const Navbar = () => {
                 </span>
                 <span className='text-neutral-300'>.dev</span>
               </div>
-            </a>
+            </Link>
 
             {/* Desktop Menu */}
             <div className='hidden md:flex items-center space-x-4'>
               <div className='flex items-center space-x-4'>
                 {navLinks.map((link, index) => (
-                  <a
+                  <Link
                     key={index}
-                    href={link.href}
+                    to={{ pathname: '/', hash: link.href }}
+                    onClick={() => handleNavClick(link.href)}
                     className='relative px-3 py-2 text-sm text-neutral-300 transition-colors duration-200 hover:text-white group whitespace-nowrap'
                     aria-label={link.label}
                   >
                     <span className='relative z-10'>{link.label}</span>
                     {/* animated underline */}
                     <span className='absolute left-0 -bottom-1 h-0.5 w-full bg-gradient-to-r from-blue-400 to-purple-400 transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300' />
-                  </a>
+                  </Link>
                 ))}
               </div>
 
@@ -119,15 +155,15 @@ const Navbar = () => {
         {/* Mobile Menu Content */}
         <div className='relative flex flex-col items-center justify-center min-h-screen gap-6 p-6'>
           {navLinks.map((link, index) => (
-            <a
+            <Link
               key={index}
-              href={link.href}
-              onClick={handleNavClick}
+              to={{ pathname: '/', hash: link.href }}
+              onClick={() => handleNavClick(link.href)}
               className='relative px-8 py-3 text-lg font-medium text-neutral-400 transition-all duration-300 hover:text-white group'
             >
               <span className='relative z-10'>{link.label}</span>
               <div className='absolute inset-0 w-full h-full rounded-lg bg-neutral-900/0 scale-75 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100' />
-            </a>
+            </Link>
           ))}
 
           {/* Resume Button - Mobile */}
